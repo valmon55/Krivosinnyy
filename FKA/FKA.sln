@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FKA.Krivosinnyy", "FKA.Krivosinnyy\FKA.Krivosinnyy.csproj", "{43995E39-F509-4B55-9045-1050E981DA5F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FKA.Krivosinnyy.DAL", "FKA.Krivosinnyy.DAL\FKA.Krivosinnyy.DAL.csproj", "{A0711A9A-E834-476F-A3DE-EEF9D5EA68BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{43995E39-F509-4B55-9045-1050E981DA5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43995E39-F509-4B55-9045-1050E981DA5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43995E39-F509-4B55-9045-1050E981DA5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0711A9A-E834-476F-A3DE-EEF9D5EA68BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0711A9A-E834-476F-A3DE-EEF9D5EA68BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0711A9A-E834-476F-A3DE-EEF9D5EA68BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0711A9A-E834-476F-A3DE-EEF9D5EA68BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

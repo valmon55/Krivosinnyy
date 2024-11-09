@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "http": {
+    "Krivosinnyy http": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
@@ -18,7 +18,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "https": {
+    "Krivosinnyy https": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
