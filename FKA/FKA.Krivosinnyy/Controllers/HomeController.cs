@@ -1,4 +1,4 @@
-using FKA.Krivosinnyy.Models;
+using FKA.Krivosinnyy.BLL.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

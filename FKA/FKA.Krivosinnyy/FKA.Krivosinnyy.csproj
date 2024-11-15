@@ -10,4 +10,11 @@
     <ProjectReference Include="..\FKA.Krivosinnyy.DAL\FKA.Krivosinnyy.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BLL\ViewModels\Role\" />
+    <Folder Include="Views\Role\" />
+    <Folder Include="Views\Person\" />
+    <Folder Include="Views\User\" />
+  </ItemGroup>
+
 </Project>

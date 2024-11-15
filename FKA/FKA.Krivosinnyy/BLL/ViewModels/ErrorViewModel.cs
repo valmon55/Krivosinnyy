@@ -1,4 +1,4 @@
-namespace FKA.Krivosinnyy.Models
+namespace FKA.Krivosinnyy.BLL.ViewModels
 {
     public class ErrorViewModel
     {

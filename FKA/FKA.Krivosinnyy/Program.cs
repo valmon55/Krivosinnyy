@@ -1,3 +1,6 @@
+using FKA.Krivosinnyy.DAL;
+using Microsoft.EntityFrameworkCore;
+
 namespace FKA.Krivosinnyy
 {
     public class Program
@@ -8,6 +11,7 @@ namespace FKA.Krivosinnyy
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<MyFamilyContext>(options => options.UseSqlServer("HP_Connection"));
 
             var app = builder.Build();
 
@@ -32,11 +36,11 @@ namespace FKA.Krivosinnyy
 
             app.Run();
         }
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        //public static IHostBuilder CreateHostBuilder(string[] args) =>
+        //    Host.CreateDefaultBuilder(args)
+        //        .ConfigureWebHostDefaults(webBuilder =>
+        //        {
+        //            webBuilder.UseStartup<Startup>();
+        //        });
     }
 }
