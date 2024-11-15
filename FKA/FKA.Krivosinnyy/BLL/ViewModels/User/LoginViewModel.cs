@@ -5,9 +5,9 @@ namespace FKA.Krivosinnyy.BLL.ViewModels.User
     public class LoginViewModel
     {
         [Required(ErrorMessage = "Поле Email обязательно к заполнению")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Поле Email обязательно к заполнению")]
         [Display(Name = "Email", Prompt = "Введите email")]
-        public string Login {  get; set; }
+        public string Email {  get; set; }
 
         [Required(ErrorMessage = "Обязательно к заполнению")]
         [DataType(DataType.Password)]

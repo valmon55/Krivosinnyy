@@ -1,0 +1,6 @@
+﻿.navbar-right {
+    float: right !important
+}
+.navbar-right li {
+    display: inline-block;
+}
