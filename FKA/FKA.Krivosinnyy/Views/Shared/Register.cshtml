@@ -1,7 +1,92 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model FKA.Krivosinnyy.BLL.ViewModels.User.RegisterViewModel
+
 @{
     ViewData["Title"] = "Register";
 }
+<h3>Register</h3>
+<form>
+    <div asp-validation-summary="ModelOnly"></div>
+    <div>
+        <label asp-for="First_Name"></label><br />
+        <input asp-for="First_Name" />
+        <span asp-validation-for="First_Name"></span>
+    </div>
+    <div>
+        <label asp-for="Middle_Name"></label><br />
+        <input asp-for="Middle_Name" />
+        <span asp-validation-for="Middle_Name"></span>
+    </div>
+    <div>
+        <label asp-for="Last_Name"></label><br />
+        <input asp-for="Last_Name" />
+        <span asp-validation-for="Last_Name"></span>
+    </div>
+    <div>
+        <label asp-for="Email"></label><br />
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div>День рождения</div>
+    <div>
+        <select asp-for="Day" id="ddlDay">
+            <option value="">@Model.Day</option>
+        </select>
+        <span asp-validation-for="Day"></span>
+
+        <select asp-for="Month" asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.BLL.ViewModels.Months>()"
+                onchange="PopulateDays()" id="ddlMonth">
+            <option value="">@Model.Month</option>
+        </select>
+        <span asp-validation-for="Month"></span>
+
+        <select asp-for="Year" id="ddlYear"
+            asp-items="Enumerable.Range(DateTime.Now.AddYears(-100).Year, DateTime.Now.AddYears(-12).Year - DateTime.Now.AddYears(-100).Year).Reverse().Select(x=> new SelectListItem(x.ToString(), x.ToString()))">
+            <option value="">@Model.Year</option>
+        </select>
+        <span asp-validation-for="Year"></span>
+    </div>
+    <div class="mrgn">
+        <label asp-for="PasswordReg"></label><br />
+        <input asp-for="PasswordReg" />
+        <span asp-validation-for="PasswordReg"></span>
+    </div>
+    <div class="mrgn">
+        <label asp-for="PasswordConfirm"></label><br />
+        <input asp-for="PasswordConfirm" />
+        <span asp-validation-for="PasswordConfirm"></span>
+    </div>
+    <div class="mrgn">
+        <label asp-for="Login"></label><br />
+        <input asp-for="Login" />
+        <span asp-validation-for="Login"></span>
+    </div>
+    <div>
+        <input type="submit" value="Зарегистрироваться" />
+    </div>
+</form>
+
+<script type="text/javascript">
+    function PopulateDays() {
+        var ddlMonth = document.getElementById("ddlMonth");
+        var ddlYear = document.getElementById("ddlYear");
+        var ddlDay = document.getElementById("ddlDay");
+
+        var y = ddlYear.options[ddlYear.selectedIndex].value;
+        var m = ddlMonth.options[ddlMonth.selectedIndex].value != 0;
+        if (ddlMonth.options[ddlMonth.selectedIndex].value != 0 && ddlYear.options[ddlYear.selectedIndex].value != 0) {
+            var dayCount = 32 - new Date(ddlYear.options[ddlYear.selectedIndex].value, ddlMonth.options[ddlMonth.selectedIndex].value - 1, 32).getDate();
+            ddlDay.options.length = 0;
+            for (var i = 1; i <= dayCount; i++) {
+                AddOption(ddlDay, i, i);
+            }
+        }
+    }
+
+    function AddOption(ddl, text, value) {
+        var opt = document.createElement("OPTION");
+        opt.text = text;
+        opt.value = value;
+        ddl.options.add(opt);
+    }
+</script>
 

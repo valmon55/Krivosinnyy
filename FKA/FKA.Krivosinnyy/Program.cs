@@ -1,4 +1,6 @@
 using FKA.Krivosinnyy.DAL;
+using FKA.Krivosinnyy.DAL.Entities;
+using FKA.Krivosinnyy.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace FKA.Krivosinnyy
@@ -11,8 +13,17 @@ namespace FKA.Krivosinnyy
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<MyFamilyContext>(options => options.UseSqlServer("HP_Connection"));
+            builder.Services.AddDbContext<MyFamilyContext>(options => options.UseSqlServer("Data Source=DESKTOP-ACP6245\\SQLEXPRESS;Database=Krivosinnyy;Integrated Security = true;Trust Server Certificate=True;Trusted_Connection=True;"));
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+            builder.Services.AddIdentity<User, Role>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+            })
+                .AddEntityFrameworkStores<MyFamilyContext>();
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
