@@ -16,13 +16,15 @@ namespace FKA.Krivosinnyy.DAL.Entities
         public enum Gender;
         public enum Relationship;
         public DateOnly BirthDate { get; set; }
-        public int? FatherId { get; set; }
-        public Person? Father { get; set; }
-        public int? MotherId { get; set; }
-        public Person? Morther { get; set; }
+        //public int? FatherId { get; set; }
+        //public Person? Father { get; set; }
+        //public int? MotherId { get; set; }
+        //public Person? Mother { get; set; }
+        //public List<Person> Chirldren { get; set; } = new();
+        //public List<Relationship> Relations { get; set; }
     }
     public enum Gender { Man, Woman }
-    public enum Relationship
+    public enum Relation
     {
         Son,
         Daughter,
