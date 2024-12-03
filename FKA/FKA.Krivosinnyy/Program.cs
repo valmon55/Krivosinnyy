@@ -1,3 +1,4 @@
+using AutoMapper;
 using FKA.Krivosinnyy.DAL;
 using FKA.Krivosinnyy.DAL.Entities;
 using FKA.Krivosinnyy.DAL.Repositories;
@@ -11,8 +12,15 @@ namespace FKA.Krivosinnyy
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var mapperConfig = new MapperConfiguration(v =>
+            {
+                v.AddProfile(new MappingProfile());
+            });
+            IMapper mapper = mapperConfig.CreateMapper();
+            
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddSingleton(mapper);
             builder.Services.AddDbContext<MyFamilyContext>(options => options.UseSqlServer("Data Source=DESKTOP-ACP6245\\SQLEXPRESS;Database=Krivosinnyy;Integrated Security = true;Trust Server Certificate=True;Trusted_Connection=True;"));
             builder.Services.AddScoped<IUserRepository, UserRepository>();
 
@@ -23,6 +31,26 @@ namespace FKA.Krivosinnyy
                 options.Password.RequireDigit = false;
             })
                 .AddEntityFrameworkStores<MyFamilyContext>();
+
+            builder.Services.AddAuthentication(options => options.DefaultScheme = "Cookies")
+                .AddCookie("Cookies", options =>
+                {
+                    options.Events = new Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents
+                    {
+                        OnRedirectToLogin = redirectContext =>
+                        {
+                            redirectContext.HttpContext.Response.StatusCode = 401;
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Login";
+                options.LogoutPath = "/Logout";
+                options.AccessDeniedPath = "/Home/Error";
+            });
             
             var app = builder.Build();
 
@@ -39,6 +67,7 @@ namespace FKA.Krivosinnyy
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

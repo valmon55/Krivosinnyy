@@ -1,13 +1,14 @@
 ﻿using FKA.Krivosinnyy.DAL.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FKA.Krivosinnyy.DAL
 {
-    public class MyFamilyContext :IdentityDbContext<User> 
+    public class MyFamilyContext : IdentityDbContext<User> 
     {
         public override DbSet<User> Users { get; set; }
-        //public override DbSet<Role> Roles { get; set; }
+        //public override DbSet<IdentityRole> Roles { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Relationship> Relationships { get; set; }
         public DbSet<RelMain> RelMains { get; set; }
@@ -24,7 +25,6 @@ namespace FKA.Krivosinnyy.DAL
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            //builder.Entity<Relationship>().ToTable("CK_Different_Persons", "[FirstId] != [SecondId]");
         }
     }
 }

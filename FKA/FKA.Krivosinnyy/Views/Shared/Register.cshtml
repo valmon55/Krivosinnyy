@@ -4,7 +4,7 @@
     ViewData["Title"] = "Register";
 }
 <h3>Register</h3>
-<form>
+<form method="post" asp-action="Register" asp-controller="User">
     <div asp-validation-summary="ModelOnly"></div>
     <div>
         <label asp-for="First_Name"></label><br />
