@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace FKA.Krivosinnyy.DAL.Entities
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<UInt32>
     {
+        public override UInt32 Id { get; set; }
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public string Middle_Name { get; set; }

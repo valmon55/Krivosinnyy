@@ -2,6 +2,7 @@ using AutoMapper;
 using FKA.Krivosinnyy.DAL;
 using FKA.Krivosinnyy.DAL.Entities;
 using FKA.Krivosinnyy.DAL.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace FKA.Krivosinnyy
@@ -11,6 +12,7 @@ namespace FKA.Krivosinnyy
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            string connection = builder.Configuration.GetConnectionString("HP_Connection");
 
             var mapperConfig = new MapperConfiguration(v =>
             {
@@ -21,7 +23,7 @@ namespace FKA.Krivosinnyy
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddSingleton(mapper);
-            builder.Services.AddDbContext<MyFamilyContext>(options => options.UseSqlServer("Data Source=DESKTOP-ACP6245\\SQLEXPRESS;Database=Krivosinnyy;Integrated Security = true;Trust Server Certificate=True;Trusted_Connection=True;"));
+            builder.Services.AddDbContext<MyFamilyContext>(options => options.UseSqlServer(connection));
             builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             builder.Services.AddIdentity<User, Role>(options =>

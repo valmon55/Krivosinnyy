@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FKA.Krivosinnyy.DAL
 {
-    public class MyFamilyContext : IdentityDbContext<User> 
+    public class MyFamilyContext : IdentityDbContext<User, Role, UInt32>
     {
         public override DbSet<User> Users { get; set; }
-        //public override DbSet<IdentityRole> Roles { get; set; }
+        //public override DbSet<Role> Roles { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Relationship> Relationships { get; set; }
         public DbSet<RelMain> RelMains { get; set; }

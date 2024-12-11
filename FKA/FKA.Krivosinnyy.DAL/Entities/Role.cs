@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace FKA.Krivosinnyy.DAL.Entities
 {
-    public class Role : IdentityRole
+    public class Role : IdentityRole<UInt32>
     {
+        public override UInt32 Id { get; set; }
         public string Description { get; set; }
     }
 }

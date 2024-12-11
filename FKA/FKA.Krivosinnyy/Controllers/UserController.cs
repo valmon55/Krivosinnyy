@@ -47,11 +47,11 @@ namespace FKA.Krivosinnyy.Controllers
                 var result = await _userManager.CreateAsync(user, model.PasswordReg);
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    var currentUser = await _userManager.FindByIdAsync(user.Id);
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    //var currentUser = await _userManager.FindByIdAsync(user.Id);
 
-                    await _userManager.AddToRoleAsync(currentUser, userRole.Name);
-                    await _signInManager.RefreshSignInAsync(currentUser);
+                    //await _userManager.AddToRoleAsync(currentUser, userRole.Name);
+                    //await _signInManager.RefreshSignInAsync(currentUser);
                 }
                 else
                 {
