@@ -19,7 +19,7 @@ namespace FKA.Krivosinnyy.DAL
         /// <param name="options"></param>
         public MyFamilyContext(DbContextOptions<MyFamilyContext> options) : base(options) 
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
         protected override void OnModelCreating(ModelBuilder builder)
