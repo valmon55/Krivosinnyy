@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using FKA.Krivosinnyy.DAL.Entities;
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<User> SignInManager;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,9 +32,18 @@
                         </li>
                     </ul>    
                     <ul class="navbar-nav navbar-right">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
-                        </li>
+                        @if (!SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <partial name="LogoutPartional" />
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
