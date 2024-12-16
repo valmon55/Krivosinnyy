@@ -4,6 +4,7 @@ using FKA.Krivosinnyy.DAL.Entities;
 using FKA.Krivosinnyy.DAL.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace FKA.Krivosinnyy
 {
@@ -23,7 +24,11 @@ namespace FKA.Krivosinnyy
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddSingleton(mapper);
-            builder.Services.AddDbContext<MyFamilyContext>(options => options.UseSqlServer(connection));
+            builder.Services.AddDbContext<MyFamilyContext>(options => 
+                options.UseSqlServer(connection, b => b.MigrationsAssembly("FKA.Krivosinnyy"))
+                        //.ConfigureWarnings(warnings => 
+                        //                    warnings.Ignore(RelationalEventId.PendingModelChangesWarning))
+                        );
             builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             builder.Services.AddIdentity<User, Role>(options =>
