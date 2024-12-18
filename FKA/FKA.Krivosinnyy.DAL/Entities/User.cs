@@ -14,7 +14,7 @@ namespace FKA.Krivosinnyy.DAL.Entities
         public string Last_Name { get; set; }
         public string Middle_Name { get; set; }
         public DateTime BirthDate { get; set; }
-        //public string Foto { get; set; }
+        public string Foto { get; set; }
 
     }
 }
