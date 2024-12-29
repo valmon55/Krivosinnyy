@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FKA.Krivosinnyy.DAL.Entities
 {
+    [Table("User")]
     public class User : IdentityUser<UInt32>
     {
         public override UInt32 Id { get; set; }
@@ -14,7 +16,7 @@ namespace FKA.Krivosinnyy.DAL.Entities
         public string Last_Name { get; set; }
         public string Middle_Name { get; set; }
         public DateTime BirthDate { get; set; }
-        public string Foto { get; set; }
+        public string? Foto { get; set; }
 
     }
 }
