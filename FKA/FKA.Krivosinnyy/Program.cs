@@ -2,6 +2,8 @@ using AutoMapper;
 using FKA.Krivosinnyy.DAL;
 using FKA.Krivosinnyy.DAL.Entities;
 using FKA.Krivosinnyy.DAL.Repositories;
+using FKA.Krivosinnyy.Services;
+using FKA.Krivosinnyy.Services.IServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -22,7 +24,6 @@ namespace FKA.Krivosinnyy
             IMapper mapper = mapperConfig.CreateMapper();
             
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
             builder.Services.AddSingleton(mapper);
             builder.Services.AddDbContext<MyFamilyContext>(options => 
                 options.UseSqlServer(connection, b => b.MigrationsAssembly("FKA.Krivosinnyy"))
@@ -30,6 +31,7 @@ namespace FKA.Krivosinnyy
                         //                    warnings.Ignore(RelationalEventId.PendingModelChangesWarning))
                         );
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddTransient<IUserService, UserService>();
 
             builder.Services.AddIdentity<User, Role>(options =>
             {
@@ -58,7 +60,8 @@ namespace FKA.Krivosinnyy
                 options.LogoutPath = "/Logout";
                 options.AccessDeniedPath = "/Home/Error";
             });
-            
+            builder.Services.AddControllersWithViews();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

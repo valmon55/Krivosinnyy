@@ -16,6 +16,16 @@ namespace FKA.Krivosinnyy
             CreateMap<LoginViewModel, User>()
                 .ForMember(x => x.Email, opt => opt.MapFrom(c => c.Email))
                 .ForMember(x => x.PasswordHash, opt => opt.MapFrom(c => c.Password));
+            CreateMap<User, UserViewModel>()
+                .ForMember(x => x.First_Name, opt => opt.MapFrom(c => c.First_Name))
+                .ForMember(x => x.Last_Name, opt => opt.MapFrom(c => c.Last_Name))
+                .ForMember(x => x.Middle_Name, opt => opt.MapFrom(c => c.Middle_Name))
+                .ForMember(x => x.Email, opt => opt.MapFrom(c => c.Email))
+                .ForMember(x => x.Day, opt => opt.MapFrom(c => c.BirthDate.Day))
+                .ForMember(x => x.Month, opt => opt.MapFrom(c => c.BirthDate.Month))
+                .ForMember(x => x.Year, opt => opt.MapFrom(c => c.BirthDate.Year))
+                .ForMember(x => x.Login, opt => opt.MapFrom(c => c.UserName))
+                ;
         }
     }
 }

@@ -14,7 +14,6 @@
     <Folder Include="BLL\ViewModels\Role\" />
     <Folder Include="Views\Role\" />
     <Folder Include="Views\Person\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
 
   <ItemGroup>

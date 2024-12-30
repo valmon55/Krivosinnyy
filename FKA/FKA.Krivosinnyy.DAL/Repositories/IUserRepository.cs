@@ -10,7 +10,7 @@ namespace FKA.Krivosinnyy.DAL.Repositories
     public interface IUserRepository
     {
         IEnumerable<User> GetAll();
-        User Get(int id);
+        User Get(UInt32 Id);
         void Create(User item);
         void Update(User item);
         void Delete(User item);

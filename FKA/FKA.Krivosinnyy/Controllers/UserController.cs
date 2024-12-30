@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using FKA.Krivosinnyy.BLL.ViewModels.User;
 using FKA.Krivosinnyy.DAL.Entities;
+using FKA.Krivosinnyy.Services;
+using FKA.Krivosinnyy.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,16 +17,19 @@ namespace FKA.Krivosinnyy.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly IMapper _mapper;
+        private readonly IUserService _userService;
         public UserController(UserManager<User> userManager,
                 SignInManager<User> signInManager,                
                 RoleManager<Role> roleManager,
-                IMapper mapper
+                IMapper mapper,
+                IUserService userService
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _mapper = mapper;
+            _userService = userService;
         }
         //public UserController() { }
         [Route("Register")]
@@ -120,6 +126,38 @@ namespace FKA.Krivosinnyy.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+        [Authorize(Roles = "Admin")]
+        [Route("AllUsers")]
+        [HttpGet]
+        public IActionResult AllUsers()
+        {
+            return View(_userService.AllUsers());
+        }
+        [Authorize(Roles = "Admin")]
+        [Route("Edit")]
+        [HttpGet]
+        public IActionResult Edit(UInt32 userId)
+        {
+            return View("EditUser");///
+        }
+        [Authorize(Roles = "Admin")]
+        [Route("Edit")]
+        [HttpPost]
+        public IActionResult Edit(UserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return RedirectToAction("AllUsers");
+        }
+        [Authorize(Roles = "Admin")]
+        [Route("Delete")]
+        [HttpDelete]
+        public IActionResult Delete(UInt32 userId)
+        {
+            return RedirectToAction("AllUsers");
         }
     }
 }
