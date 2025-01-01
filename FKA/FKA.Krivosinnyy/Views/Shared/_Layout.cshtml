@@ -28,9 +28,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <!--<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>-->
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AllUsers">AllUsers</a>
                         </li>
-                    </ul>    
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Person" asp-action="AllPersons">AllPersons</a>
+                        </li>
+                    </ul>
                     <ul class="navbar-nav navbar-right">
                         @if (!SignInManager.IsSignedIn(User))
                         {

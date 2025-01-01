@@ -1,0 +1,17 @@
+﻿@model List<FKA.Krivosinnyy.BLL.ViewModels.User.UserViewModel>
+
+@{
+    ViewData["Title"] = "AllUsers";
+}
+<h3>List of users</h3>
+
+@foreach(var user in Model)
+{
+    <div>
+        <div> @user.Foto</div>
+        <span> @user.Login</span>
+        <span> @user.Last_Name @user.First_Name @user.Middle_Name</span>
+        <span> @user.Day @((FKA.Krivosinnyy.BLL.ViewModels.Months)user.Month) @user.Year</span>
+        <span> @user.Email</span>
+    </div>    
+}
