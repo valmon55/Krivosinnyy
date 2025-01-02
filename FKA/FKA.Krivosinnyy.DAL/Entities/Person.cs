@@ -13,15 +13,9 @@ namespace FKA.Krivosinnyy.DAL.Entities
         public string LastName { get; set; } = string.Empty;
         public string MiddleName { get; set; } = string.Empty;
         public string Photo { get; set; } = string.Empty;
-        public enum Gender;
-        public enum Relationship;
+        public Gender gender;
+//        public enum Relationship;
         public DateOnly BirthDate { get; set; }
-        //public int? FatherId { get; set; }
-        //public Person? Father { get; set; }
-        //public int? MotherId { get; set; }
-        //public Person? Mother { get; set; }
-        //public List<Person> Chirldren { get; set; } = new();
-        //public List<Relationship> Relations { get; set; }
     }
     public enum Gender { Man, Woman }
     public enum Relation

@@ -13,7 +13,6 @@
   <ItemGroup>
     <Folder Include="BLL\ViewModels\Role\" />
     <Folder Include="Views\Role\" />
-    <Folder Include="Views\Person\" />
   </ItemGroup>
 
   <ItemGroup>

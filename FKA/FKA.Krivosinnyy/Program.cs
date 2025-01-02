@@ -32,6 +32,8 @@ namespace FKA.Krivosinnyy
                         );
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+            builder.Services.AddTransient<IPersonService, PersonService>();
 
             builder.Services.AddIdentity<User, Role>(options =>
             {
