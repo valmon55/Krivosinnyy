@@ -14,23 +14,24 @@ namespace FKA.Krivosinnyy.Controllers
 {
     public class PersonController : Controller
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<Role> _roleManager;
+        //private readonly UserManager<User> _userManager;
+        //private readonly SignInManager<User> _signInManager;
+        //private readonly RoleManager<Role> _roleManager;
         private readonly IMapper _mapper;
-        private readonly IUserService _userService;
-        public PersonController(UserManager<User> userManager,
-                SignInManager<User> signInManager,                
-                RoleManager<Role> roleManager,
+        private readonly IPersonService _personService;
+        public PersonController(
+            //UserManager<User> userManager,
+            //    SignInManager<User> signInManager,                
+            //    RoleManager<Role> roleManager,
                 IMapper mapper,
-                IUserService userService
+                IPersonService personService
             )
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _roleManager = roleManager;
+            //_userManager = userManager;
+            //_signInManager = signInManager;
+            //_roleManager = roleManager;
             _mapper = mapper;
-            _userService = userService;
+            _personService = personService;
         }
         [Route("AddPerson")]
         [HttpGet]
@@ -44,6 +45,7 @@ namespace FKA.Krivosinnyy.Controllers
         {
             if(ModelState.IsValid)
             {
+                _personService.AddPerson(model);
             }
             return RedirectToAction("AllPersons", "Person");
         }
@@ -52,7 +54,7 @@ namespace FKA.Krivosinnyy.Controllers
         [HttpGet]
         public IActionResult AllPersons()
         {
-            return View(_userService.AllUsers());
+            return View(_personService.AllPersons());
         }
         //[Authorize(Roles = "Admin")]
         [Route("EditPerson")]

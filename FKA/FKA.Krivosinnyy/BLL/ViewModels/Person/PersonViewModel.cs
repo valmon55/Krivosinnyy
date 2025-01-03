@@ -6,10 +6,10 @@ namespace FKA.Krivosinnyy.BLL.ViewModels.Person
     public class PersonViewModel
     {
         [Required]
-        public string First_Name { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
         [Required]
-        public string Last_Name { get; set; } = string.Empty;
-        public string Middle_Name { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string MiddleName { get; set; } = string.Empty;
         public string Photo { get; set; } = string.Empty;
         public Gender gender;
         [Display(Name = "Год")]

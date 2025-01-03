@@ -1,47 +1,51 @@
 ﻿using AutoMapper;
 using FKA.Krivosinnyy.BLL.ViewModels.Person;
 using FKA.Krivosinnyy.BLL.ViewModels.User;
+using FKA.Krivosinnyy.DAL.Entities;
 using FKA.Krivosinnyy.DAL.Repositories;
 using FKA.Krivosinnyy.Services.IServices;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FKA.Krivosinnyy.Services
 {
     public class PersonService : IPersonService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IPersonRepository _personRepository;
         private readonly IMapper _mapper;
-        public PersonService(IUserRepository userRepository, IMapper mapper) 
-        { 
-            _userRepository = userRepository;
+        public PersonService(IPersonRepository personRepository, IMapper mapper) 
+        {
+            _personRepository = personRepository;
             _mapper = mapper;
         }
-        public void AddPerson(PersonViewModel person)
+        public void AddPerson(PersonViewModel personView)
         {
-            throw new NotImplementedException();
+            var person = _mapper.Map<Person>(personView);
+            _personRepository.Create(person);
         }
         public List<PersonViewModel> AllPersons()
         {
-            var users = _userRepository.GetAll();
-            var usersView = new List<PersonViewModel>();
+            var persons = _personRepository.GetAll();
+            var personsView = new List<PersonViewModel>();
 
-            foreach(var user in users)
+            foreach(var person in persons)
             {
-                var userView = _mapper.Map<PersonViewModel>(user);
-                usersView.Add(userView);
+                var personView = _mapper.Map<PersonViewModel>(person);
+                personsView.Add(personView);
             }
-            return usersView;
+            return personsView;
         }
         public PersonViewModel UpdatePerson(int personId)
         {
             throw new NotImplementedException();
         }
-        public void UpdatePerson(PersonViewModel person)
+        public void UpdatePerson(PersonViewModel personView)
         {
             throw new NotImplementedException();
         }
-        public void DeletePerson(int userId)
+        public void DeletePerson(int personId)
         {
-            throw new NotImplementedException();
+            var person = _personRepository.Get(personId);
+            _personRepository.Delete(person);
         }
     }
 }

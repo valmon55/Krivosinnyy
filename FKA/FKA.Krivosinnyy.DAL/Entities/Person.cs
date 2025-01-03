@@ -15,7 +15,7 @@ namespace FKA.Krivosinnyy.DAL.Entities
         public string Photo { get; set; } = string.Empty;
         public Gender gender;
 //        public enum Relationship;
-        public DateOnly BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
     }
     public enum Gender { Man, Woman }
     public enum Relation

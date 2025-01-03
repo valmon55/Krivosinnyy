@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FKA.Krivosinnyy.BLL.ViewModels.Person;
 using FKA.Krivosinnyy.BLL.ViewModels.User;
 using FKA.Krivosinnyy.DAL.Entities;
 
@@ -24,8 +25,19 @@ namespace FKA.Krivosinnyy
                 .ForMember(x => x.Day, opt => opt.MapFrom(c => c.BirthDate.Day))
                 .ForMember(x => x.Month, opt => opt.MapFrom(c => c.BirthDate.Month))
                 .ForMember(x => x.Year, opt => opt.MapFrom(c => c.BirthDate.Year))
-                .ForMember(x => x.Login, opt => opt.MapFrom(c => c.UserName))
-                ;
+                .ForMember(x => x.Login, opt => opt.MapFrom(c => c.UserName));
+            CreateMap<PersonViewModel, Person>()
+                .ForMember(x => x.FirstName, opt => opt.MapFrom(c => c.FirstName))
+                .ForMember(x => x.LastName, opt => opt.MapFrom(c => c.LastName))
+                .ForMember(x => x.MiddleName, opt => opt.MapFrom(c => c.MiddleName))
+                .ForMember(x => x.BirthDate, opt => opt.MapFrom(c => new DateTime((int)c.Year, (int)c.Month, (int)c.Day)));
+            CreateMap<Person, PersonViewModel>()
+                .ForMember(x => x.FirstName, opt => opt.MapFrom(c => c.FirstName))
+                .ForMember(x => x.LastName, opt => opt.MapFrom(c => c.LastName))
+                .ForMember(x => x.MiddleName, opt => opt.MapFrom(c => c.MiddleName))
+                .ForMember(x => x.Day, opt => opt.MapFrom(c => c.BirthDate.Day))
+                .ForMember(x => x.Month, opt => opt.MapFrom(c => c.BirthDate.Month))
+                .ForMember(x => x.Year, opt => opt.MapFrom(c => c.BirthDate.Year));
         }
     }
 }

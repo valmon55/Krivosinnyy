@@ -1,0 +1,73 @@
+﻿@model FKA.Krivosinnyy.BLL.ViewModels.Person.PersonViewModel
+
+@{
+    ViewData["Title"] = "AddPerson";
+}
+<h3>Add Person</h3>
+
+<form method="post" asp-action="AddPerson" asp-controller="Person">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div>
+        <label asp-for="FirstName"></label><br />
+        <input asp-for="FirstName" />
+        <span asp-validation-for="FirstName"></span>
+    </div>
+    <div>
+        <label asp-for="MiddleName"></label><br />
+        <input asp-for="MiddleName" />
+        <span asp-validation-for="MiddleName"></span>
+    </div>
+    <div>
+        <label asp-for="LastName"></label><br />
+        <input asp-for="LastName" />
+        <span asp-validation-for="LastName"></span>
+    </div>
+    <div>День рождения</div>
+    <div>
+        <select asp-for="Day" id="ddlDay">
+            <option value="">@Model.Day</option>
+        </select>
+        <span asp-validation-for="Day"></span>
+
+        <select asp-for="Month" asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.BLL.ViewModels.Months>()"
+                onchange="PopulateDays()" id="ddlMonth">
+            <option value="">@Model.Month</option>
+        </select>
+        <span asp-validation-for="Month"></span>
+
+        <select asp-for="Year" id="ddlYear"
+                asp-items="Enumerable.Range(DateTime.Now.AddYears(-100).Year, DateTime.Now.AddYears(-12).Year - DateTime.Now.AddYears(-100).Year).Reverse().Select(x=> new SelectListItem(x.ToString(), x.ToString()))">
+            <option value="">@Model.Year</option>
+        </select>
+        <span asp-validation-for="Year"></span>
+    </div>
+    <div>
+        <input type="submit" value="Добавить" />
+    </div>
+</form>
+
+<script type="text/javascript">
+    function PopulateDays() {
+        var ddlMonth = document.getElementById("ddlMonth");
+        var ddlYear = document.getElementById("ddlYear");
+        var ddlDay = document.getElementById("ddlDay");
+
+        var y = ddlYear.options[ddlYear.selectedIndex].value;
+        var m = ddlMonth.options[ddlMonth.selectedIndex].value != 0;
+        if (ddlMonth.options[ddlMonth.selectedIndex].value != 0 && ddlYear.options[ddlYear.selectedIndex].value != 0) {
+            var dayCount = 32 - new Date(ddlYear.options[ddlYear.selectedIndex].value, ddlMonth.options[ddlMonth.selectedIndex].value - 1, 32).getDate();
+            ddlDay.options.length = 0;
+            for (var i = 1; i <= dayCount; i++) {
+                AddOption(ddlDay, i, i);
+            }
+        }
+    }
+
+    function AddOption(ddl, text, value) {
+        var opt = document.createElement("OPTION");
+        opt.text = text;
+        opt.value = value;
+        ddl.options.add(opt);
+    }
+</script>
+
