@@ -9,5 +9,6 @@ namespace FKA.Krivosinnyy.Services.IServices
         public PersonViewModel UpdatePerson(int personId);
         public void UpdatePerson(PersonViewModel person);
         public void DeletePerson(int personId);
+        PersonViewModel ViewPerson(int personId);
     }
 }

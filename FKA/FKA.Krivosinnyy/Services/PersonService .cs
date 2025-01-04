@@ -34,6 +34,11 @@ namespace FKA.Krivosinnyy.Services
             }
             return personsView;
         }
+        public PersonViewModel ViewPerson(int personId)
+        {
+            var person = _personRepository.Get(personId);
+            return _mapper.Map<PersonViewModel>(person);
+        }
         public PersonViewModel UpdatePerson(int personId)
         {
             throw new NotImplementedException();

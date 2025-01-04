@@ -1,0 +1,19 @@
+﻿@model FKA.Krivosinnyy.BLL.ViewModels.Person.PersonViewModel
+
+@{
+    ViewData["Title"] = "Person";
+}
+<h3>Person Page</h3>
+
+<div>
+    <div> @Model.Photo</div>
+    <form method="post" asp-action="LoadPhoto" asp-controller="Person" asp-route-personId=@Model.Id>
+        <input type="submit" value="Загрузить фото" />
+    </form>
+    <span> @Model.LastName @Model.FirstName @Model.MiddleName</span>
+    <span> @Model.Day @((FKA.Krivosinnyy.BLL.ViewModels.Months)Model.Month) @Model.Year</span>
+    <form method="get" asp-action="AddPersonRelation" asp-controller="Person" asp-route-personId=@Model.Id>
+        <input type="submit" value="Добавить в профиль" />
+    </form>
+</div>
+

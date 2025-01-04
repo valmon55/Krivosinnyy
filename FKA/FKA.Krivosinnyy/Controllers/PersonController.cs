@@ -47,6 +47,12 @@ namespace FKA.Krivosinnyy.Controllers
         {
             return View(_personService.AllPersons());
         }
+        [Route("ViewPerson")]
+        [HttpGet]
+        public IActionResult ViewPerson(int personId)
+        {
+            return View("Person",_personService.ViewPerson(personId));
+        }
         //[Authorize(Roles = "Admin")]
         [Route("EditPerson")]
         [HttpGet]
