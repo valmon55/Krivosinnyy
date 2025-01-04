@@ -5,6 +5,7 @@ namespace FKA.Krivosinnyy.BLL.ViewModels.Person
 {
     public class PersonViewModel
     {
+        public int Id { get; set; }
         [Required]
         public string FirstName { get; set; } = string.Empty;
         [Required]

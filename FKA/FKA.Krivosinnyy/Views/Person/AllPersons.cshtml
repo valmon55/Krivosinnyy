@@ -14,5 +14,8 @@
         <div> @person.Photo</div>
         <span> @person.LastName @person.FirstName @person.MiddleName</span>
         <span> @person.Day @((FKA.Krivosinnyy.BLL.ViewModels.Months)person.Month) @person.Year</span>
+        <form method="post" asp-action="RemovePerson" asp-controller="Person" asp-route-personId=@person.Id>
+            <input type="submit" value="Удалить человека"/>
+        </form>
     </div>    
 }

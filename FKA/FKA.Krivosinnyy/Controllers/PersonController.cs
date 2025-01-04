@@ -14,22 +14,13 @@ namespace FKA.Krivosinnyy.Controllers
 {
     public class PersonController : Controller
     {
-        //private readonly UserManager<User> _userManager;
-        //private readonly SignInManager<User> _signInManager;
-        //private readonly RoleManager<Role> _roleManager;
         private readonly IMapper _mapper;
         private readonly IPersonService _personService;
         public PersonController(
-            //UserManager<User> userManager,
-            //    SignInManager<User> signInManager,                
-            //    RoleManager<Role> roleManager,
                 IMapper mapper,
                 IPersonService personService
             )
         {
-            //_userManager = userManager;
-            //_signInManager = signInManager;
-            //_roleManager = roleManager;
             _mapper = mapper;
             _personService = personService;
         }
@@ -59,7 +50,7 @@ namespace FKA.Krivosinnyy.Controllers
         //[Authorize(Roles = "Admin")]
         [Route("EditPerson")]
         [HttpGet]
-        public IActionResult EditPerson(int userId)
+        public IActionResult EditPerson(int personId)
         {
             return View("EditUser");///
         }
@@ -76,9 +67,10 @@ namespace FKA.Krivosinnyy.Controllers
         }
         //[Authorize(Roles = "Admin")]
         [Route("RemovePerson")]
-        [HttpDelete]
-        public IActionResult RemovePerson(UInt32 userId)
+        [HttpPost] ///почему не работает [HttpDelete]  ???
+        public IActionResult RemovePerson(int personId)
         {
+            _personService.DeletePerson(personId);
             return RedirectToAction("AllPersons");
         }
     }
