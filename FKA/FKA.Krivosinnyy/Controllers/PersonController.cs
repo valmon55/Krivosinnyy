@@ -68,7 +68,7 @@ namespace FKA.Krivosinnyy.Controllers
                     await uploadedFile.CopyToAsync(fileStream);
                 }
                 ///FileService --Add   
-                _personService.SetAvatar(personId, _webHostEnvironment.WebRootPath + path);
+                _personService.SetAvatar(personId, path);
             }
             return View("Person", _personService.ViewPerson(personId));
         }

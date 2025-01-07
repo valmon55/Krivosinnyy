@@ -8,7 +8,7 @@
 <div>
     @* <div> @Model.Photo</div> *@
     <div>
-        <img src = @Model.Photo height="100px" width="100px" />
+        <img src = "@Url.Content(Model.Photo)" height="100px" width="100px" />
     </div>
     <form method="post" asp-action="SetAvatar" asp-controller="Person" asp-route-personId=@Model.Id enctype="multipart/form-data">
         <input type="file" name="uploadedFile" />

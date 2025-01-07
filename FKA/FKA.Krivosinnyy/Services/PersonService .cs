@@ -40,6 +40,7 @@ namespace FKA.Krivosinnyy.Services
         public PersonViewModel ViewPerson(int personId)
         {
             var person = _personRepository.Get(personId);
+            //person.Avatar = _fileRepository.Get(person.Avatar.Id);
             return _mapper.Map<PersonViewModel>(person);
         }
         public PersonViewModel UpdatePerson(int personId)
@@ -64,8 +65,11 @@ namespace FKA.Krivosinnyy.Services
                     Path = filePath,
                     Type = "Image"
                 });
+            var avatar = _fileRepository.GetAll().Where(f => f.Path == filePath).FirstOrDefault();
             var person = _personRepository.Get(personId);
-
+            //обновляем ссылку на аватарку в БД
+            person.Avatar = avatar;
+            _personRepository.Update(person);
         }
     }
 }
