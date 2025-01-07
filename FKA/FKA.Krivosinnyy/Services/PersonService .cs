@@ -5,17 +5,20 @@ using FKA.Krivosinnyy.DAL.Entities;
 using FKA.Krivosinnyy.DAL.Repositories;
 using FKA.Krivosinnyy.Services.IServices;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.IO;
 
 namespace FKA.Krivosinnyy.Services
 {
     public class PersonService : IPersonService
     {
         private readonly IPersonRepository _personRepository;
+        private readonly IFileRepository _fileRepository;
         private readonly IMapper _mapper;
-        public PersonService(IPersonRepository personRepository, IMapper mapper) 
+        public PersonService(IPersonRepository personRepository, IMapper mapper, IFileRepository fileRepository) 
         {
             _personRepository = personRepository;
             _mapper = mapper;
+            _fileRepository = fileRepository;
         }
         public void AddPerson(PersonViewModel personView)
         {
@@ -51,6 +54,16 @@ namespace FKA.Krivosinnyy.Services
         {
             var person = _personRepository.Get(personId);
             _personRepository.Delete(person);
+        }
+        public void SetAvatar(int personId, string filePath)
+        {
+            _fileRepository.Add(
+                new DAL.Entities.File()
+                {
+                    Name = "",
+                    Path = filePath,
+                    Type = "Image"
+                });
         }
     }
 }

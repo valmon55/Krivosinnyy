@@ -12,7 +12,8 @@ namespace FKA.Krivosinnyy.DAL.Entities
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string MiddleName { get; set; } = string.Empty;
-        public string Photo { get; set; } = string.Empty;
+        //public string Photo { get; set; } = string.Empty;
+        public File? Avatar {  get; set; }
         public Gender gender;
 //        public enum Relationship;
         public DateTime BirthDate { get; set; }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using File = FKA.Krivosinnyy.DAL.Entities.File;
 
 namespace FKA.Krivosinnyy.DAL
 {
@@ -10,6 +11,7 @@ namespace FKA.Krivosinnyy.DAL
         public override DbSet<User> Users { get; set; }
         //public override DbSet<Role> Roles { get; set; }
         public DbSet<Person> Persons { get; set; }
+        public DbSet<File> Files { get; set; }
         public DbSet<Relationship> Relationships { get; set; }
         public DbSet<RelMain> RelMains { get; set; }
         /// <summary>

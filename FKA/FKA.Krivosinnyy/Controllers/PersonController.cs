@@ -16,13 +16,16 @@ namespace FKA.Krivosinnyy.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IPersonService _personService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         public PersonController(
                 IMapper mapper,
-                IPersonService personService
+                IPersonService personService,
+                IWebHostEnvironment webHostEnvironment
             )
         {
             _mapper = mapper;
             _personService = personService;
+            _webHostEnvironment = webHostEnvironment;
         }
         [Route("AddPerson")]
         [HttpGet]
@@ -52,6 +55,22 @@ namespace FKA.Krivosinnyy.Controllers
         public IActionResult ViewPerson(int personId)
         {
             return View("Person",_personService.ViewPerson(personId));
+        }
+        [Route("SetAvatar")]
+        [HttpPost]
+        public async Task<IActionResult> SetAvatar(int personId, IFormFile uploadedFile)
+        {
+            if(uploadedFile != null)
+            {
+                string path = "/Files/" + uploadedFile.FileName;
+                using(var fileStream = new FileStream(_webHostEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(fileStream);
+                }
+                ///FileService --Add   
+                _personService.SetAvatar(personId, _webHostEnvironment.WebRootPath + path);
+            }
+            return RedirectToAction("ViewPerson");
         }
         //[Authorize(Roles = "Admin")]
         [Route("EditPerson")]

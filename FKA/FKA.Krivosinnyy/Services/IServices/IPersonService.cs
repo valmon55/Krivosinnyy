@@ -10,5 +10,6 @@ namespace FKA.Krivosinnyy.Services.IServices
         public void UpdatePerson(PersonViewModel person);
         public void DeletePerson(int personId);
         PersonViewModel ViewPerson(int personId);
+        public void SetAvatar(int personId, string filePath);
     }
 }

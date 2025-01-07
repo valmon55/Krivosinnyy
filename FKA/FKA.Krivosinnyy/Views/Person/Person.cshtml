@@ -6,7 +6,7 @@
 <h3>Person Page</h3>
 
 <div>
-    <div> @Model.Photo</div>
+    @* <div> @Model.Photo</div> *@
     <form method="post" asp-action="LoadPhoto" asp-controller="Person" asp-route-personId=@Model.Id>
         <input type="submit" value="Загрузить фото" />
     </form>

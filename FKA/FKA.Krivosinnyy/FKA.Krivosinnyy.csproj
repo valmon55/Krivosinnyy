@@ -13,6 +13,7 @@
   <ItemGroup>
     <Folder Include="BLL\ViewModels\Role\" />
     <Folder Include="Views\Role\" />
+    <Folder Include="wwwroot\Files\" />
   </ItemGroup>
 
   <ItemGroup>
