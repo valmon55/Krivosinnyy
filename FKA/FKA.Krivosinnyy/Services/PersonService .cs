@@ -64,6 +64,8 @@ namespace FKA.Krivosinnyy.Services
                     Path = filePath,
                     Type = "Image"
                 });
+            var person = _personRepository.Get(personId);
+
         }
     }
 }

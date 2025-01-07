@@ -70,7 +70,7 @@ namespace FKA.Krivosinnyy.Controllers
                 ///FileService --Add   
                 _personService.SetAvatar(personId, _webHostEnvironment.WebRootPath + path);
             }
-            return RedirectToAction("ViewPerson");
+            return View("Person", _personService.ViewPerson(personId));
         }
         //[Authorize(Roles = "Admin")]
         [Route("EditPerson")]

@@ -7,13 +7,17 @@
 
 <div>
     @* <div> @Model.Photo</div> *@
-    <form method="post" asp-action="LoadPhoto" asp-controller="Person" asp-route-personId=@Model.Id>
+    <div>
+        <img src = @Model.Photo height="100px" width="100px" />
+    </div>
+    <form method="post" asp-action="SetAvatar" asp-controller="Person" asp-route-personId=@Model.Id enctype="multipart/form-data">
+        <input type="file" name="uploadedFile" />
         <input type="submit" value="Загрузить фото" />
     </form>
     <span> @Model.LastName @Model.FirstName @Model.MiddleName</span>
     <span> @Model.Day @((FKA.Krivosinnyy.BLL.ViewModels.Months)Model.Month) @Model.Year</span>
     <form method="get" asp-action="AddPersonRelation" asp-controller="Person" asp-route-personId=@Model.Id>
-        <input type="submit" value="Добавить в профиль" />
+        <input type="submit" value="Добавить в профиль близкого" />
     </form>
 </div>
 
