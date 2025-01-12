@@ -1,4 +1,5 @@
-﻿using FKA.Krivosinnyy.DAL.Entities;
+﻿using FKA.Krivosinnyy.DAL.Configuration;
+using FKA.Krivosinnyy.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,7 @@ namespace FKA.Krivosinnyy.DAL
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.ApplyConfiguration<Relationship>(new RelationshipConfiguration());
         }
     }
 }

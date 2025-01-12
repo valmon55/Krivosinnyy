@@ -8,12 +8,13 @@ namespace FKA.Krivosinnyy.DAL.Entities
 {
     public class Relationship
     {
-        public int Id {  get; set; }
-        //public int FirstId { get; set; }
-        //public Person First {  get; set; }
-        //public int SecondId { get; set; }
-        //public Person Second { get; set; }
-        //public int RelMainId { get; set; }
-        //public RelMain RelMain { get; set; }
+        public int Id { get; set; }
+        public int PersonId { get; set; }
+        public Person Person { get; set; }
+        //public int RelationshipId { get; set; }
+        //public RelMain RelMains { get; set; }
+        public int RelatedPersonId { get; set; }
+        public Person RelatedPerson { get; set; }
+        public Relation Relation { get; set; }
     }
 }
