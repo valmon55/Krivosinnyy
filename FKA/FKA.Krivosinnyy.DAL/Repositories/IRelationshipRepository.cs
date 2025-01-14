@@ -1,0 +1,16 @@
+﻿using FKA.Krivosinnyy.DAL.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FKA.Krivosinnyy.DAL.Repositories
+{
+    public interface IRelationshipRepository
+    {
+        IEnumerable<Person> GetAllByPerson(int Id);
+        void Add(int Id, Person item);
+        void Remove(int Id, Person item);
+    }
+}
