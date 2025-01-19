@@ -60,18 +60,28 @@ namespace FKA.Krivosinnyy.DAL.Repositories
                 Person = p, 
                 RelatedPersonId = item.Id, 
                 RelatedPerson = item, 
-                Relation = Relation.Girlfriend
+                Relation = Relation.Girlfriend // 
             };
             Relationships.Add(newRel);
 
-            //нужно добавить отношения с противоположной стороны ??
+            //нужно ли добавлять отношения с противоположной стороны ??
 
             _db.SaveChanges();
         }
 
         public void Remove(int Id, Person item)
         {
-            throw new NotImplementedException();
+            var rels = Relationships.Include(c => c.RelatedPersonId).Where(x => x.Id == Id);
+            foreach (var r in rels)
+            {
+                if (r.RelatedPerson == item)
+                {
+                    Relationships.Remove(r);
+                    _db.SaveChanges();
+
+                    return;
+                }
+            }
         }
     }
 }

@@ -1,0 +1,23 @@
+﻿@model FKA.Krivosinnyy.BLL.ViewModels.Relationship.PersonRelationsViewModel
+
+
+@{
+    ViewData["Title"] = "AddPersonRelation";
+}
+<h3>List of persons to Add into Relationship</h3>
+<form method="post" asp-action="AddPersonRelation" asp-controller="Relationship" asp-route-personId=@Model.Person.Id>
+    @foreach (var person in Model.RelatedPersons)
+    {
+        <div>
+            <input type="checkbox" name="SelectedPersons" value=@person.Id />
+            <label>
+                <div> @person.Avatar</div>
+                <span> @person.LastName @person.FirstName @person.MiddleName</span>
+            </label>
+            <div>
+                <select asp-for=@person.RelationType asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.DAL.Entities.Relation>()"></select>
+            </div>
+        </div>    
+    }
+    <input type="submit" value="Добавить человека"/>
+</form>

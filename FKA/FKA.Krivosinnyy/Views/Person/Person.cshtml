@@ -16,10 +16,9 @@
         <input type="file" name="uploadedFile" />
         <input type="submit" value="Загрузить фото" />
     </form>
+    <input asp-for="Id" hidden />
     <span> @Model.LastName @Model.FirstName @Model.MiddleName</span>
     <span> @Model.Day @((FKA.Krivosinnyy.BLL.ViewModels.Months)Model.Month) @Model.Year</span>
-    <form method="get" asp-action="AddPersonRelation" asp-controller="Person" asp-route-personId=@Model.Id>
-        <input type="submit" value="Добавить в профиль близкого" />
-    </form>
+    <a method="get" asp-action="AddPersonRelation" asp-controller="Relationship" asp-route-personId=@Model.Id>Добавить в профиль близкого</a>
 </div>
 

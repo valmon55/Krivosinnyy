@@ -27,6 +27,7 @@ namespace FKA.Krivosinnyy
                 .ForMember(x => x.Year, opt => opt.MapFrom(c => c.BirthDate.Year))
                 .ForMember(x => x.Login, opt => opt.MapFrom(c => c.UserName));
             CreateMap<PersonViewModel, Person>()
+                .ForMember(x => x.Id, opt => opt.MapFrom( c => c.Id))
                 .ForMember(x => x.FirstName, opt => opt.MapFrom(c => c.FirstName))
                 .ForMember(x => x.LastName, opt => opt.MapFrom(c => c.LastName))
                 .ForMember(x => x.MiddleName, opt => opt.MapFrom(c => c.MiddleName))

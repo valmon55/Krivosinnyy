@@ -3,7 +3,7 @@ using Entity = FKA.Krivosinnyy.DAL.Entities;
 
 namespace FKA.Krivosinnyy.BLL.ViewModels.Relationship
 {
-    public class PersonRelationsViewModel
+    public class AddPersonRelationsViewModel
     {
         public int Id { get; set; }
         public int PersonId { get; set; }
