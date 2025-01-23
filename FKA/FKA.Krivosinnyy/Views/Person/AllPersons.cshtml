@@ -12,6 +12,9 @@
 {
     <div>
         @* <div> @person.Photo</div> *@
+        <div>
+            <img src="@Url.Content(person.Photo)" height="100px" width="100px" />
+        </div>
         <span> @person.LastName @person.FirstName @person.MiddleName</span>
         <span> @person.Day @((FKA.Krivosinnyy.BLL.ViewModels.Months)person.Month) @person.Year</span>
         <a method="get" asp-action="ViewPerson" asp-controller="Person" asp-route-personId=@person.Id>Открыть профиль</a>

@@ -40,11 +40,11 @@ namespace FKA.Krivosinnyy.Controllers
         }
         [Route("AddPersonRelation")]
         [HttpPost]
-        public async Task<IActionResult> AddPersonRelation(PersonRelationsViewModel model)
+        public async Task<IActionResult> AddPersonRelation(AddPersonRelationsViewModel model)
         {
             if(ModelState.IsValid)
             {
-                //_personService.AddPerson(model);
+                _relationshipService.SavePersonRelations(model);
             }
             return RedirectToAction("AllPersons", "Person");
         }

@@ -1,23 +1,29 @@
-﻿@model FKA.Krivosinnyy.BLL.ViewModels.Relationship.PersonRelationsViewModel
+﻿@model FKA.Krivosinnyy.BLL.ViewModels.Relationship.AddPersonRelationsViewModel
 
 
 @{
     ViewData["Title"] = "AddPersonRelation";
 }
 <h3>List of persons to Add into Relationship</h3>
+<div>
+    <img src="@Url.Content(Model.Person.Photo)" height="100px" width="100px" />
+    <span> @Model.Person.LastName @Model.Person.FirstName @Model.Person.MiddleName</span>
+</div>
+<div> Возможно вы их знаете: </div>
 <form method="post" asp-action="AddPersonRelation" asp-controller="Relationship" asp-route-personId=@Model.Person.Id>
     @foreach (var person in Model.RelatedPersons)
     {
         <div>
             <input type="checkbox" name="SelectedPersons" value=@person.Id />
             <label>
-                <div> @person.Avatar</div>
+                @* <div>@person.Avatar.Path</div> *@
+                <img src="@Url.Content(person.Photo)" height="100px" width="100px" />
                 <span> @person.LastName @person.FirstName @person.MiddleName</span>
+                <span>
+                    <select asp-for=@person.Relation asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.DAL.Entities.Relation>()"></select>
+                </span>
             </label>
-            <div>
-                <select asp-for=@person.RelationType asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.DAL.Entities.Relation>()"></select>
-            </div>
         </div>    
     }
-    <input type="submit" value="Добавить человека"/>
+    <input type="submit" value=" Изменить "/>
 </form>
