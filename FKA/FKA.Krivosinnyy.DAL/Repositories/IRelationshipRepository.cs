@@ -10,6 +10,7 @@ namespace FKA.Krivosinnyy.DAL.Repositories
     public interface IRelationshipRepository
     {
         IEnumerable<Person> GetAllByPerson(int Id);
+        public void Add(Relationship item);
         void Add(int Id, Person item);
         void Remove(int Id, Person item);
     }

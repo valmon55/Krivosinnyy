@@ -6,7 +6,8 @@ namespace FKA.Krivosinnyy.BLL.ViewModels.Relationship
 {
     public class AddPersonRelationsViewModel
     {
-        public PersonViewModel Person { get; set; }
-        public List<PersonExtRelTypeViewModel> RelatedPersons { get; set; }
+        public int Id { get; set; }
+        public PersonViewModel? Person { get; set; }
+        public List<PersonExtRelTypeViewModel>? RelatedPersons { get; set; }
     }
 }

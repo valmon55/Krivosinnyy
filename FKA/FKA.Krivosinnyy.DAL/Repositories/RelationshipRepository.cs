@@ -37,14 +37,17 @@ namespace FKA.Krivosinnyy.DAL.Repositories
             
             return pers;
         }
-
+        public void Add(Relationship item)
+        {
+            Relationships.Add(item);
+        }
         public void Add(int Id, Person item)
         {
             // Себя самого не добавляем
             if (Id == item.Id)
                 return;
             //не дублируем
-            var rels = Relationships.Include(c => c.RelatedPersonId).Where(x => x.Id == Id);
+            var rels = Relationships.Where(x => x.PersonId == Id);
             foreach (var r in rels)
             {
                 if (r.RelatedPerson == item) 
@@ -54,6 +57,10 @@ namespace FKA.Krivosinnyy.DAL.Repositories
             }
 
             var p = Persons.Where(x => x.Id == Id).FirstOrDefault();
+            if (p == null)
+            {
+                return;
+            }
             var newRel = new Relationship() 
             { 
                 PersonId = Id, 

@@ -59,6 +59,7 @@ namespace FKA.Krivosinnyy.Services
             {
                 allPersonsWithRelType.Add(_mapper.Map<PersonExtRelTypeViewModel>(p));
             }
+            model.Id = personId;
             model.Person = _mapper.Map<PersonViewModel>(person);            
             model.RelatedPersons = allPersonsWithRelType;
 
@@ -69,17 +70,30 @@ namespace FKA.Krivosinnyy.Services
         /// </summary>
         /// <param name="model"></param>
         public void SavePersonRelations(AddPersonRelationsViewModel model)
+        //public void SavePersonRelations(int )
         {
             var relations = new List<Relationship>();
             var rel = new Relationship();
+            rel.Person = _mapper.Map<Person>(model.Person);
             // перебираем связи по одной
-            foreach(var relatedPersonViewModel in model.RelatedPersons)
+            foreach (var relatedPersonViewModel in model.RelatedPersons)
             {
-                rel.Person = _mapper.Map<Person>(model.Person);
-                _mapper.Map<PersonWithRelTypeExt>(relatedPersonViewModel);
-
+                rel.RelatedPerson = _mapper.Map<PersonWithRelTypeExt>(relatedPersonViewModel);
+                rel.Relation = (Relation)relatedPersonViewModel.Relation;
+                _relationshipRepository.Add(rel);
             }
-            //_relationshipRepository.Add();
+        }
+        public void SavePersonRelations(int personId, List<int> relatedPersons)
+        {
+            var pers = new Person();
+            foreach (var relatedPerson in relatedPersons)
+            {
+                pers = _personRepository.Get(relatedPerson);
+                if (pers != null)
+                {
+                    AddPersonRelation(personId, pers);
+                }
+            }
         }
         public void AddPersonRelation(int personId, Person person)
         {
