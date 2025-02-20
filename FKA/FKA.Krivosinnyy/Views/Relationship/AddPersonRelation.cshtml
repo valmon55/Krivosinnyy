@@ -1,6 +1,5 @@
 ﻿@model FKA.Krivosinnyy.BLL.ViewModels.Relationship.AddPersonRelationsViewModel
 
-
 @{
     ViewData["Title"] = "AddPersonRelation";
 }
@@ -23,6 +22,20 @@
     @foreach (var person in Model.RelatedPersons)
     {
         <div>
+@*             @foreach (var checkedPerson in Model.CheckedPersons)
+            {
+                if (person.Id == checkedPerson.Key.Id)
+                {
+                    if (checkedPerson.Value)
+                    {
+                        <input type="checkbox" name="SelectedPersons" checked="checked" value=@person.Id />
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="SelectedPersons" value=@person.Id />
+                    }
+                }
+            } *@
             <input type="checkbox" name="SelectedPersons" value=@person.Id />
             <label>
                 @* <div>@person.Avatar.Path</div> *@/

@@ -6,6 +6,7 @@ using FKA.Krivosinnyy.DAL.Entities;
 using FKA.Krivosinnyy.DAL.Repositories;
 using FKA.Krivosinnyy.Services.IServices;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.IO;
 
 namespace FKA.Krivosinnyy.Services
@@ -22,37 +23,12 @@ namespace FKA.Krivosinnyy.Services
             _mapper = mapper;
             _relationshipRepository = relationshipRepository;
         }
-        //public PersonRelationsViewModel EditPersonRelations(int personId)
-        //{
-        //    var model = new PersonRelationsViewModel();
-        //    var person = _personRepository.Get(personId);
-        //    var allPersons = _personRepository.GetAll();
-
-        //    var allPersonsWithRelType = new List<PersonWithRelTypeExt>();
-        //    foreach (var p in allPersons)
-        //    {
-        //        allPersonsWithRelType.Add(new PersonWithRelTypeExt() 
-        //        {  
-        //            Avatar = p.Avatar,                    
-        //            Id = p.Id,
-        //            FirstName = p.FirstName,
-        //            MiddleName = p.MiddleName,
-        //            LastName = p.LastName,
-        //            BirthDate = p.BirthDate,
-        //            RelationType = Relation.Girlfriend 
-        //        });
-        //    }
-        //    model.Person = person;
-        //    model.PersonId = personId;
-        //    model.RelatedPersons = allPersonsWithRelType;
-
-        //    return model;
-        //}
         public AddPersonRelationsViewModel EditPersonRelations(int personId)
         {
             var model = new AddPersonRelationsViewModel();
             var person = _personRepository.Get(personId);
-            var allPersons = _personRepository.GetAll();
+            //все кроме самого себя
+            var allPersons = _personRepository.GetAll().Where(x => x.Id != personId);
 
             var allPersonsWithRelType = new List<PersonExtRelTypeViewModel>();
             foreach (var p in allPersons)
@@ -62,6 +38,23 @@ namespace FKA.Krivosinnyy.Services
             model.Id = personId;
             model.Person = _mapper.Map<PersonViewModel>(person);            
             model.RelatedPersons = allPersonsWithRelType;
+
+            /// В списке всех возможных персон отмечаем взаимосвязи
+            var checkedPersons = new Dictionary<PersonWithRelTypeExt, bool>();
+            var relationPersons = _relationshipRepository.GetAllByPerson(personId);
+
+            foreach(var pers in allPersons)
+            {
+                var p = new PersonWithRelTypeExt(pers);
+                checkedPersons.Add(p, false);
+                foreach(var relationPerson in relationPersons)
+                {
+                    if(pers == relationPerson)
+                    {
+                        checkedPersons[p] = true;
+                    }
+                }
+            }
 
             return model;
         }
@@ -91,7 +84,7 @@ namespace FKA.Krivosinnyy.Services
                 pers = _personRepository.Get(relatedPerson);
                 if (pers != null)
                 {
-                    AddPersonRelation(personId, pers);
+                    _relationshipRepository.Add(personId, pers);
                 }
             }
         }

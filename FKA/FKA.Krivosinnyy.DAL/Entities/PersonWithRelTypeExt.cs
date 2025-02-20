@@ -8,6 +8,13 @@ namespace FKA.Krivosinnyy.DAL.Entities
 {
     public class PersonWithRelTypeExt : Person
     {
+        private Person pers;
+
+        public PersonWithRelTypeExt(Person pers)
+        {
+            this.pers = pers;
+        }
+
         public Relation RelationType { get; set; }
     }
 }
