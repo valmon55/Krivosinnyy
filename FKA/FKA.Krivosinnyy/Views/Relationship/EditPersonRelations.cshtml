@@ -14,7 +14,20 @@
     @foreach (var person in Model.RelatedPersons)
     {
         <div>
-            <input type="checkbox" name="SelectedPersons" value=@person.Id />
+            @foreach(var checkPersonId in Model.CheckedRelatedPersonIds)
+            {
+                if (checkPersonId.Key == @person.Id)
+                {
+                    if(checkPersonId.Value)
+                    {
+                        <input type="checkbox" name="SelectedPersons" checked="checked" value=@person.Id />
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="SelectedPersons" value=@person.Id />
+                    }
+                }
+            }            
             <label>
                 @* <div>@person.Avatar.Path</div> *@
                 <img src="@Url.Content(person.Avatar.Path)" height="100px" width="100px" />
