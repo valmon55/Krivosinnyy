@@ -13,12 +13,15 @@ namespace FKA.Krivosinnyy.Services
     public class RelationshipService : IRelationshipService
     {
         private readonly IPersonRepository _personRepository;
+        private readonly IFileRepository _fileRepository;
         private readonly IRelationshipRepository _relationshipRepository;
         private readonly IMapper _mapper;
-        public RelationshipService(IPersonRepository personRepository, IMapper mapper, 
+        public RelationshipService(IPersonRepository personRepository, IMapper mapper,
+                IFileRepository fileRepository,
                 IRelationshipRepository relationshipRepository) 
         {
             _personRepository = personRepository;
+            _fileRepository = fileRepository;
             _mapper = mapper;
             _relationshipRepository = relationshipRepository;
         }
@@ -27,8 +30,17 @@ namespace FKA.Krivosinnyy.Services
             var model = new EditPersonRelationsViewModel();
             var person = _personRepository.Get(personId);
 
-            var allPersonsWithRelType = _relationshipRepository.GetAllWithRelType();
+            var allPersonsWithRelType = _relationshipRepository.GetAllWithRelType().ToList();
+            foreach(var relation in allPersonsWithRelType)
+            {
+                relation.Avatar ??= new DAL.Entities.File() { Path = String.Empty };
+            }
             var myRelPersonsWithRelType = _relationshipRepository.GetAllByPersonWithRelType(personId);
+            foreach (var relation in myRelPersonsWithRelType)
+            {
+                relation.Avatar ??= new DAL.Entities.File() { Path = String.Empty };
+            }
+
             var relPers = new Dictionary<int, bool>();
 
             foreach (var p in allPersonsWithRelType)
@@ -43,7 +55,7 @@ namespace FKA.Krivosinnyy.Services
                 }
             }
             model.Person = person;            
-            model.RelatedPersons = allPersonsWithRelType.ToList();
+            model.RelatedPersons = allPersonsWithRelType;
             model.CheckedRelatedPersonIds = relPers;
 
             return model;
