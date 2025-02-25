@@ -22,45 +22,29 @@ namespace FKA.Krivosinnyy.Services
             _mapper = mapper;
             _relationshipRepository = relationshipRepository;
         }
-        //public PersonRelationsViewModel EditPersonRelations(int personId)
-        //{
-        //    var model = new PersonRelationsViewModel();
-        //    var person = _personRepository.Get(personId);
-        //    var allPersons = _personRepository.GetAll();
-
-        //    var allPersonsWithRelType = new List<PersonWithRelTypeExt>();
-        //    foreach (var p in allPersons)
-        //    {
-        //        allPersonsWithRelType.Add(new PersonWithRelTypeExt() 
-        //        {  
-        //            Avatar = p.Avatar,                    
-        //            Id = p.Id,
-        //            FirstName = p.FirstName,
-        //            MiddleName = p.MiddleName,
-        //            LastName = p.LastName,
-        //            BirthDate = p.BirthDate,
-        //            RelationType = Relation.Girlfriend 
-        //        });
-        //    }
-        //    model.Person = person;
-        //    model.PersonId = personId;
-        //    model.RelatedPersons = allPersonsWithRelType;
-
-        //    return model;
-        //}
-        public AddPersonRelationsViewModel EditPersonRelations(int personId)
+        public EditPersonRelationsViewModel EditPersonRelations(int personId)
         {
-            var model = new AddPersonRelationsViewModel();
+            var model = new EditPersonRelationsViewModel();
             var person = _personRepository.Get(personId);
-            var allPersons = _personRepository.GetAll();
 
-            var allPersonsWithRelType = new List<PersonExtRelTypeViewModel>();
-            foreach (var p in allPersons)
+            var allPersonsWithRelType = _relationshipRepository.GetAllWithRelType();
+            var myRelPersonsWithRelType = _relationshipRepository.GetAllByPersonWithRelType(personId);
+            var relPers = new Dictionary<int, bool>();
+
+            foreach (var p in allPersonsWithRelType)
             {
-                allPersonsWithRelType.Add(_mapper.Map<PersonExtRelTypeViewModel>(p));
+                relPers.Add(p.Id, false);
+                foreach(var m in myRelPersonsWithRelType)
+                {
+                    if (m.Id == p.Id)
+                    {
+                        relPers[p.Id] = true;
+                    }
+                }
             }
-            model.Person = _mapper.Map<PersonViewModel>(person);            
-            model.RelatedPersons = allPersonsWithRelType;
+            model.Person = person;            
+            model.RelatedPersons = allPersonsWithRelType.ToList();
+            model.CheckedRelatedPersonIds = relPers;
 
             return model;
         }

@@ -38,6 +38,37 @@ namespace FKA.Krivosinnyy.DAL.Repositories
             return pers;
         }
 
+        public IEnumerable<PersonWithRelTypeExt> GetAllWithRelType()
+        {
+            var rels = Relationships
+                                .Include(c => c.RelatedPerson)
+                                .ToList();
+            var pers = new List<PersonWithRelTypeExt>();
+            var p = new PersonWithRelTypeExt();
+            foreach (var r in rels)
+            {
+                p = p.SetRelType(r.RelatedPerson, r.Relation);
+                pers.Add(p);
+            }
+
+            return pers;
+        }
+        public IEnumerable<PersonWithRelTypeExt> GetAllByPersonWithRelType(int Id)
+        {
+            var rels = Relationships
+                                .Where(x => x.Id == Id)
+                                .Include(c => c.RelatedPerson)
+                                .ToList();
+            var pers = new List<PersonWithRelTypeExt>();
+            var p = new PersonWithRelTypeExt();
+            foreach (var r in rels)
+            {
+                p = p.SetRelType(r.RelatedPerson, r.Relation);
+                pers.Add(p);
+            }
+
+            return pers;
+        }
         public void Add(int Id, Person item)
         {
             // Себя самого не добавляем
@@ -68,7 +99,45 @@ namespace FKA.Krivosinnyy.DAL.Repositories
 
             _db.SaveChanges();
         }
+        public void Add(int Id, PersonWithRelTypeExt item)
+        {
+            // Себя самого не добавляем
+            if (Id == item.Id)
+                return;
+            //не дублируем
+            var rels = Relationships.Include(c => c.RelatedPersonId).Where(x => x.Id == Id);
+            foreach (var r in rels)
+            {
+                if (r.RelatedPerson == item)
+                {
+                    return;
+                }
+            }
 
+            var p = Persons.Where(x => x.Id == Id).FirstOrDefault();
+            var newRel = new Relationship()
+            {
+                PersonId = Id,
+                Person = p,
+                RelatedPersonId = item.Id,
+                RelatedPerson = new Person() { 
+                    Id = item.Id,
+                    Avatar = item.Avatar,
+                    FirstName = item.FirstName,
+                    MiddleName = item.MiddleName,
+                    LastName = item.LastName,
+                    BirthDate = item.BirthDate,
+                    gender = item.gender,
+                },
+                Relation = item.RelationType
+            };
+            Relationships.Add(newRel);
+
+            //нужно ли добавлять отношения с противоположной стороны ??
+
+            _db.SaveChanges();
+
+        }
         public void Remove(int Id, Person item)
         {
             var rels = Relationships.Include(c => c.RelatedPersonId).Where(x => x.Id == Id);

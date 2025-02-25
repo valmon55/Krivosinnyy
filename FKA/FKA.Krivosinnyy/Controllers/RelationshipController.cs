@@ -28,35 +28,25 @@ namespace FKA.Krivosinnyy.Controllers
             _personService = personService;
             _relationshipService = relationshipService;
         }
-        [Route("AddPersonRelation")]
+        [Route("EditPersonRelations")]
         [HttpGet]
         /// для человека с personId
         /// подготавливаем список возможных людей 
         /// исключаем себя и  уже добавленных людей
-        public IActionResult AddPersonRelation(int personId)
+        public IActionResult EditPersonRelations(int personId)
         {
             var rels = _relationshipService.EditPersonRelations(personId);
             return View(rels);
         }
-        [Route("AddPersonRelation")]
+        [Route("EditPersonRelations")]
         [HttpPost]
-        public async Task<IActionResult> AddPersonRelation(AddPersonRelationsViewModel model)
+        public async Task<IActionResult> EditPersonRelations(EditPersonRelationsViewModel model)
         {
             if(ModelState.IsValid)
             {
-                _relationshipService.SavePersonRelations(model);
+                //_relationshipService.SavePersonRelations(model);
             }
             return RedirectToAction("AllPersons", "Person");
-        }
-        //[Authorize(Roles = "Admin")]
-        [Route("RemovePersonRelation")]
-        [HttpPost] ///почему не работает [HttpDelete]  ???
-        /// для человека с personId
-        /// убираем человека "person" из связей
-        public IActionResult RemovePersonRelation(int personId, Person person)
-        {
-            
-            return RedirectToAction("AllPersons","Person");
         }
     }
 }
