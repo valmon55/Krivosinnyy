@@ -10,7 +10,10 @@
     <span> @Model.Person.LastName @Model.Person.FirstName @Model.Person.MiddleName</span>
 </div>
 <div> Возможно вы их знаете: </div>
-<form method="post" asp-action="EditPersonRelations" asp-controller="Relationship" asp-route-personId=@Model.Person.Id>
+<form method="post" asp-action="EditPersonRelations" asp-controller="Relationship" >
+    <div asp-validation-summary=ModelOnly></div>
+    @* <input asp-for=Person value=@Model.Person hidden /> *@
+    <input asp-for=PersonId value=@Model.Person.Id hidden/>
     @foreach (var person in Model.RelatedPersons)
     {
         <div>
@@ -20,11 +23,11 @@
                 {
                     if(checkPersonId.Value)
                     {
-                        <input type="checkbox" name="SelectedPersons" checked="checked" value=@person.Id />
+                        <input type="checkbox" name="SelectedPersons" checked="checked" value=@checkPersonId.Key />
                     }
                     else
                     {
-                        <input type="checkbox" name="SelectedPersons" value=@person.Id />
+                        <input type="checkbox" name="SelectedPersons" value=@checkPersonId.Key />
                     }
                 }
             }            
@@ -38,5 +41,7 @@
             </label>
         </div>    
     }
+    @* <input asp-for=@Model name="p" value=@Model hidden /> *@
+    @* <input asp-for=CheckedRelatedPersonIds name=RelatedPersonsDic value=@Model.CheckedRelatedPersonIds hidden /> *@
     <input type="submit" value=" Изменить "/>
 </form>

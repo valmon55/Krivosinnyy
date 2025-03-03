@@ -64,16 +64,15 @@ namespace FKA.Krivosinnyy.Services
         /// Для 1 персоны Имеем список выбранных персон с типом связи
         /// </summary>
         /// <param name="model"></param>
-        public void SavePersonRelations(AddPersonRelationsViewModel model)
+        public void EditPersonRelations(EditPersonRelationsViewModel model, List<int> SelectedPersons)
         {
-            var relations = new List<Relationship>();
-            var rel = new Relationship();
             // перебираем связи по одной
-            foreach(var relatedPersonViewModel in model.RelatedPersons)
+            foreach(var relatedPerson in model.RelatedPersons)
             {
-                rel.Person = _mapper.Map<Person>(model.Person);
-                _mapper.Map<PersonWithRelTypeExt>(relatedPersonViewModel);
-
+                foreach(var person in SelectedPersons)
+                {
+                    //if(relatedPerson.Id )
+                }
             }
             //_relationshipRepository.Add();
         }
