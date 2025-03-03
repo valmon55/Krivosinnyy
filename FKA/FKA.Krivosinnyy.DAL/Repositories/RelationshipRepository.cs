@@ -75,7 +75,7 @@ namespace FKA.Krivosinnyy.DAL.Repositories
             if (Id == item.Id)
                 return;
             //не дублируем
-            var rels = Relationships.Include(c => c.RelatedPersonId).Where(x => x.Id == Id);
+            var rels = Relationships.Where(x => x.Id == Id).Include(c => c.RelatedPerson);
             foreach (var r in rels)
             {
                 if (r.RelatedPerson == item) 
@@ -91,7 +91,7 @@ namespace FKA.Krivosinnyy.DAL.Repositories
                 Person = p, 
                 RelatedPersonId = item.Id, 
                 RelatedPerson = item, 
-                Relation = Relation.Girlfriend // 
+                //Relation = Relation.Girlfriend // 
             };
             Relationships.Add(newRel);
 
@@ -105,7 +105,7 @@ namespace FKA.Krivosinnyy.DAL.Repositories
             if (Id == item.Id)
                 return;
             //не дублируем
-            var rels = Relationships.Include(c => c.RelatedPersonId).Where(x => x.Id == Id);
+            var rels = Relationships.Where(x => x.Id == Id).Include(c => c.RelatedPersonId);
             foreach (var r in rels)
             {
                 if (r.RelatedPerson == item)
@@ -140,7 +140,7 @@ namespace FKA.Krivosinnyy.DAL.Repositories
         }
         public void Remove(int Id, Person item)
         {
-            var rels = Relationships.Include(c => c.RelatedPersonId).Where(x => x.Id == Id);
+            var rels = Relationships.Where(x => x.Id == Id).Include(c => c.RelatedPerson);
             foreach (var r in rels)
             {
                 if (r.RelatedPerson == item)

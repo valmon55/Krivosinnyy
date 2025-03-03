@@ -13,7 +13,7 @@
 <form method="post" asp-action="EditPersonRelations" asp-controller="Relationship" >
     <div asp-validation-summary=ModelOnly></div>
     @* <input asp-for=Person value=@Model.Person hidden /> *@
-    <input asp-for=PersonId value=@Model.Person.Id hidden/>
+    <input asp-for=PersonId value=@Model.Person.Id hidden />
     @foreach (var person in Model.RelatedPersons)
     {
         <div>

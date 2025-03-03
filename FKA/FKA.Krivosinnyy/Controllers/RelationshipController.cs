@@ -43,10 +43,12 @@ namespace FKA.Krivosinnyy.Controllers
         public async Task<IActionResult> EditPersonRelations(EditPersonRelationsViewModel model, 
                                                             List<int> SelectedPersons)
         {
-            if(ModelState.IsValid)
-            {
-                _relationshipService.EditPersonRelations(model, SelectedPersons);
-            }
+            //if(ModelState.IsValid)
+            //{
+            //    _relationshipService.EditPersonRelations(model, SelectedPersons);
+            //}
+            _relationshipService.EditPersonRelations(model, SelectedPersons);
+
             return RedirectToAction("AllPersons", "Person");
         }
     }

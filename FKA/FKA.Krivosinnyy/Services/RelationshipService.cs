@@ -64,17 +64,28 @@ namespace FKA.Krivosinnyy.Services
         /// Для 1 персоны Имеем список выбранных персон с типом связи
         /// </summary>
         /// <param name="model"></param>
-        public void EditPersonRelations(EditPersonRelationsViewModel model, List<int> SelectedPersons)
+        public void EditPersonRelations(EditPersonRelationsViewModel model, List<int> SelectedPersonIds)
         {
-            // перебираем связи по одной
-            foreach(var relatedPerson in model.RelatedPersons)
+            var relatedPersons = _relationshipRepository.GetAllByPerson(model.PersonId).ToList();
+            var selectedPersons = new List<Person>();
+
+            if (relatedPersons != null)
             {
-                foreach(var person in SelectedPersons)
+                foreach (var personId in SelectedPersonIds)
                 {
-                    //if(relatedPerson.Id )
+                    selectedPersons.Add(_personRepository.Get(personId));
+                }
+                var personsToRemove = relatedPersons.Where(r => !selectedPersons.Any(s => s.Id == r.Id));
+                foreach (var person in personsToRemove)
+                {
+                    _relationshipRepository.Remove(model.PersonId, person);
+                }
+                var personsToAdd = selectedPersons.Where(s => !relatedPersons.Any(r => r.Id == s.Id));
+                foreach(var person in personsToAdd)
+                {
+                    _relationshipRepository.Add(model.PersonId, person);
                 }
             }
-            //_relationshipRepository.Add();
         }
         public void AddPersonRelation(int personId, Person person)
         {
