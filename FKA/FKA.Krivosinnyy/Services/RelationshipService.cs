@@ -30,11 +30,18 @@ namespace FKA.Krivosinnyy.Services
             var model = new EditPersonRelationsViewModel();
             var person = _personRepository.Get(personId);
 
-            var allPersonsWithRelType = _relationshipRepository.GetAllWithRelType().ToList();
-            foreach(var relation in allPersonsWithRelType)
+            var allPersons = _personRepository.GetAll().Where(x => x.Id != personId).ToList();
+            var allPersonsWithRelType = new List<PersonWithRelTypeExt>();
+            foreach (var pers in allPersons)
             {
-                relation.Avatar ??= new DAL.Entities.File() { Path = String.Empty };
+                pers.Avatar ??= new DAL.Entities.File() { Path = String.Empty };
+                allPersonsWithRelType.Add(_mapper.Map<PersonWithRelTypeExt>(pers));
             }
+            //var allPersonsWithRelType = _relationshipRepository.GetAllWithRelType().ToList();
+            //foreach(var relation in allPersonsWithRelType)
+            //{
+            //    relation.Avatar ??= new DAL.Entities.File() { Path = String.Empty };
+            //}
             var myRelPersonsWithRelType = _relationshipRepository.GetAllByPersonWithRelType(personId);
             foreach (var relation in myRelPersonsWithRelType)
             {
@@ -43,7 +50,7 @@ namespace FKA.Krivosinnyy.Services
 
             var relPers = new Dictionary<int, bool>();
 
-            foreach (var p in allPersonsWithRelType)
+            foreach (var p in allPersons)
             {
                 relPers.Add(p.Id, false);
                 foreach(var m in myRelPersonsWithRelType)
@@ -75,12 +82,12 @@ namespace FKA.Krivosinnyy.Services
                 {
                     selectedPersons.Add(_personRepository.Get(personId));
                 }
-                var personsToRemove = relatedPersons.Where(r => !selectedPersons.Any(s => s.Id == r.Id));
+                var personsToRemove = relatedPersons.Where(r => !selectedPersons.Any(s => s.Id == r.Id)).ToList();
                 foreach (var person in personsToRemove)
                 {
                     _relationshipRepository.Remove(model.PersonId, person);
                 }
-                var personsToAdd = selectedPersons.Where(s => !relatedPersons.Any(r => r.Id == s.Id));
+                var personsToAdd = selectedPersons.Where(s => !relatedPersons.Any(r => r.Id == s.Id)).ToList();
                 foreach(var person in personsToAdd)
                 {
                     _relationshipRepository.Add(model.PersonId, person);

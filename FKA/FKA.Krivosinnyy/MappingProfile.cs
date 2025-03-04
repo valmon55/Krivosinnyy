@@ -51,6 +51,7 @@ namespace FKA.Krivosinnyy
                 .ForMember(x => x.Day, opt => opt.MapFrom(c => c.BirthDate.Day))
                 .ForMember(x => x.Month, opt => opt.MapFrom(c => c.BirthDate.Month))
                 .ForMember(x => x.Year, opt => opt.MapFrom(c => c.BirthDate.Year));
+            CreateMap<Person, PersonWithRelTypeExt>();
             //CreateMap<PersonExtRelTypeViewModel, PersonWithRelTypeExt>()
             //    .ForMember(x => x.Id, opt => opt.MapFrom(c => c.Id))
             //    .ForMember(x => x.Avatar.Path, opt => opt.MapFrom(c => c.Photo))

@@ -29,11 +29,14 @@ namespace FKA.Krivosinnyy.DAL.Repositories
 
         }
 
-        public IEnumerable<Person> GetAllByPerson(int Id)
+        public IEnumerable<Person> GetAllByPerson(int personId)
         {
-            var rels = Relationships.Include(c => c.RelatedPersonId).Where(x => x.Id == Id);   
+            var rels = Relationships
+                                .Where(x => x.PersonId == personId)
+                                .Include(c => c.RelatedPerson)
+                                .ToList();
             var pers = new List<Person>();
-            rels.ForEachAsync(x => pers.Add(x.RelatedPerson));
+            rels.ForEach(x => pers.Add(x.RelatedPerson));
             
             return pers;
         }
@@ -53,10 +56,10 @@ namespace FKA.Krivosinnyy.DAL.Repositories
 
             return pers;
         }
-        public IEnumerable<PersonWithRelTypeExt> GetAllByPersonWithRelType(int Id)
+        public IEnumerable<PersonWithRelTypeExt> GetAllByPersonWithRelType(int personId)
         {
             var rels = Relationships
-                                .Where(x => x.Id == Id)
+                                .Where(x => x.PersonId == personId)
                                 .Include(c => c.RelatedPerson)
                                 .ToList();
             var pers = new List<PersonWithRelTypeExt>();
@@ -69,13 +72,13 @@ namespace FKA.Krivosinnyy.DAL.Repositories
 
             return pers;
         }
-        public void Add(int Id, Person item)
+        public void Add(int personId, Person item)
         {
             // Себя самого не добавляем
-            if (Id == item.Id)
+            if (personId == item.Id)
                 return;
             //не дублируем
-            var rels = Relationships.Where(x => x.Id == Id).Include(c => c.RelatedPerson);
+            var rels = Relationships.Where(x => x.PersonId == personId).Include(c => c.RelatedPerson);
             foreach (var r in rels)
             {
                 if (r.RelatedPerson == item) 
@@ -84,10 +87,10 @@ namespace FKA.Krivosinnyy.DAL.Repositories
                 }
             }
 
-            var p = Persons.Where(x => x.Id == Id).FirstOrDefault();
+            var p = Persons.Where(x => x.Id == personId).FirstOrDefault();
             var newRel = new Relationship() 
             { 
-                PersonId = Id, 
+                PersonId = personId, 
                 Person = p, 
                 RelatedPersonId = item.Id, 
                 RelatedPerson = item, 
@@ -138,19 +141,17 @@ namespace FKA.Krivosinnyy.DAL.Repositories
             _db.SaveChanges();
 
         }
-        public void Remove(int Id, Person item)
+        public void Remove(int personId, Person item)
         {
-            var rels = Relationships.Where(x => x.Id == Id).Include(c => c.RelatedPerson);
+            var rels = Relationships.Where(x => x.PersonId == personId).Include(c => c.RelatedPerson).ToList();
             foreach (var r in rels)
             {
                 if (r.RelatedPerson == item)
                 {
                     Relationships.Remove(r);
-                    _db.SaveChanges();
-
-                    return;
                 }
             }
+            _db.SaveChanges();
         }
     }
 }
