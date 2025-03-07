@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FKA.Krivosinnyy.BLL.Extentions;
 using FKA.Krivosinnyy.BLL.ViewModels.Person;
 using FKA.Krivosinnyy.BLL.ViewModels.User;
 using FKA.Krivosinnyy.DAL.Entities;
@@ -40,16 +41,21 @@ namespace FKA.Krivosinnyy.Services
         public PersonViewModel ViewPerson(int personId)
         {
             var person = _personRepository.Get(personId);
-            //person.Avatar = _fileRepository.Get(person.Avatar.Id);
             return _mapper.Map<PersonViewModel>(person);
         }
         public PersonViewModel UpdatePerson(int personId)
         {
             throw new NotImplementedException();
         }
-        public void UpdatePerson(PersonViewModel personView)
+        public void UpdatePerson(PersonViewModel model)
         {
-            throw new NotImplementedException();
+            var person = _personRepository.Get(model.Id);
+            person.Convert(model);
+            /// определяем файл по пути к файлу
+            /// это нужно, чтобы не исчезла аватарка
+            person.Avatar = GetAvatar(model.Photo);
+
+            _personRepository.Update(person);
         }
         public void DeletePerson(int personId)
         {
@@ -70,6 +76,11 @@ namespace FKA.Krivosinnyy.Services
             //обновляем ссылку на аватарку в БД
             person.Avatar = avatar;
             _personRepository.Update(person);
+        }
+        public DAL.Entities.File? GetAvatar(string filePath)
+        {
+            var file = _fileRepository.GetAll().Where(p => p.Path == filePath).FirstOrDefault();
+            return file;
         }
     }
 }

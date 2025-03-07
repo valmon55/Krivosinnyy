@@ -1,0 +1,39 @@
+﻿@model FKA.Krivosinnyy.BLL.ViewModels.Relationship.EditPersonRelationsViewModel
+
+@{
+    ViewData["Title"] = "Person";
+}
+<h3>Person Page</h3>
+
+<div>
+    @* Клиент не помет получить доступ к файлам напрямую на сервере *@
+    @* Необходимо создавать ссылку на ресурс изображения, который *@
+    @* браузер запрашивает после получения html страницы *@
+    <div>
+        <img src = "@Url.Content(Model.Person.Avatar.Path)" height="100px" width="100px" />
+    </div>
+    <form method="post" asp-action="SetAvatar" asp-controller="Person" asp-route-personId=@Model.Person.Id enctype="multipart/form-data">
+        <input type="file" name="uploadedFile" />
+        <input type="submit" value="Загрузить фото" />
+    </form>
+    <input asp-for="Person.Id" hidden />
+    <span> @Model.Person.LastName @Model.Person.FirstName @Model.Person.MiddleName</span>
+    <span> @Model.Person.BirthDate.Day @((FKA.Krivosinnyy.BLL.ViewModels.Months)Model.Person.BirthDate.Month) @Model.Person.BirthDate.Year</span>
+    <a method="get" asp-action="EditPerson" asp-controller="Person" asp-route-personId=@Model.Person.Id>Редактировать</a>
+    <div>
+        <h6>Ваши друзья и близкие</h6>
+        @foreach (var person in Model.RelatedPersons)
+        {
+            <div>
+                <label>
+                    @* <div>@person.Avatar.Path</div> *@
+                    <img src="@Url.Content(person.Avatar.Path)" height="100px" width="100px" />
+                    <span> @person.LastName @person.FirstName @person.MiddleName</span>
+                    <span> @person.RelationType</span>
+                </label>
+            </div>
+        }
+    </div>
+    <a method="get" asp-action="EditPersonRelations" asp-controller="Relationship" asp-route-personId=@Model.Person.Id>Добавить в профиль близкого</a>
+</div>
+

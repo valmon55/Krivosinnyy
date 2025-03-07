@@ -16,15 +16,18 @@ namespace FKA.Krivosinnyy.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IPersonService _personService;
+        private readonly IRelationshipService _relationshipService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         public PersonController(
                 IMapper mapper,
                 IPersonService personService,
+                IRelationshipService relationshipService,
                 IWebHostEnvironment webHostEnvironment
             )
         {
             _mapper = mapper;
             _personService = personService;
+            _relationshipService = relationshipService;
             _webHostEnvironment = webHostEnvironment;
         }
         [Route("AddPerson")]
@@ -54,7 +57,8 @@ namespace FKA.Krivosinnyy.Controllers
         [HttpGet]
         public IActionResult ViewPerson(int personId)
         {
-            return View("Person",_personService.ViewPerson(personId));
+            var rels = _relationshipService.PersonRelations(personId);
+            return View("PersonWithRelations",rels);
         }
         [Route("SetAvatar")]
         [HttpPost]
@@ -77,16 +81,16 @@ namespace FKA.Krivosinnyy.Controllers
         [HttpGet]
         public IActionResult EditPerson(int personId)
         {
-            return View("EditUser");///
+            return View("EditPerson",_personService.ViewPerson(personId));
         }
         [Authorize(Roles = "Admin")]
-        [Route("Edit")]
+        [Route("EditPerson")]
         [HttpPost]
         public IActionResult EditPerson(PersonViewModel model)
         {
             if (ModelState.IsValid)
             {
-
+                _personService.UpdatePerson(model);
             }
             return RedirectToAction("AllPersons");
         }

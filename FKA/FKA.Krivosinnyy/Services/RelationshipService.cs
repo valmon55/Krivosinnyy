@@ -67,6 +67,23 @@ namespace FKA.Krivosinnyy.Services
 
             return model;
         }
+        public EditPersonRelationsViewModel PersonRelations(int personId)
+        {
+            var model = new EditPersonRelationsViewModel();
+            var person = _personRepository.Get(personId);
+
+            var myRelPersonsWithRelType = _relationshipRepository.GetAllByPersonWithRelType(personId).ToList();
+            foreach (var relation in myRelPersonsWithRelType)
+            {
+                relation.Avatar ??= new DAL.Entities.File() { Path = String.Empty };
+            }
+
+            model.Person = person;
+            model.RelatedPersons = myRelPersonsWithRelType;
+
+            return model;
+        }
+
         /// <summary>
         /// Для 1 персоны Имеем список выбранных персон с типом связи
         /// </summary>

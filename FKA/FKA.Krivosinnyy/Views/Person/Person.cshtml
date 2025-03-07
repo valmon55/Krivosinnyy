@@ -19,6 +19,7 @@
     <input asp-for="Id" hidden />
     <span> @Model.LastName @Model.FirstName @Model.MiddleName</span>
     <span> @Model.Day @((FKA.Krivosinnyy.BLL.ViewModels.Months)Model.Month) @Model.Year</span>
+    <a method="get" asp-action="Edit" asp-controller="Person" asp-route-personId=@Model.Id>Редактировать</a>
     <a method="get" asp-action="EditPersonRelations" asp-controller="Relationship" asp-route-personId=@Model.Id>Добавить в профиль близкого</a>
 </div>
 
