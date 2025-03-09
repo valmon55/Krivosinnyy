@@ -30,6 +30,8 @@
                     <img src="@Url.Content(person.Avatar.Path)" height="100px" width="100px" />
                     <span> @person.LastName @person.FirstName @person.MiddleName</span>
                     <span> @person.RelationType</span>
+                    <a method="get" asp-action="EditPersonRelation" asp-controller="Relationship"
+                       asp-route-personId=@Model.Person.Id asp-route-relatedPersonId=@person.Id> Редактировать </a>
                 </label>
             </div>
         }

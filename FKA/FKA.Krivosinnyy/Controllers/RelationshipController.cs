@@ -51,5 +51,19 @@ namespace FKA.Krivosinnyy.Controllers
 
             return RedirectToAction("AllPersons", "Person");
         }
+        [Route("EditPersonRelation")]
+        [HttpGet]
+        public IActionResult EditPersonRelation(int personId, int relatedPersonId)
+        {
+            var relation = _relationshipService.GetRelation(personId,relatedPersonId);
+            return View("EditPersonRelation", relation);
+        }
+        [Route("EditPersonRelation")]
+        [HttpPost]
+        public IActionResult EditPersonRelation(RelationshipViewModel model)
+        {
+            _relationshipService.SetRelation(model);
+            return RedirectToAction("ViewPerson", "Person", new { personId = model.PersonId } );
+        }
     }
 }

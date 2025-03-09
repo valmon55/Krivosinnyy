@@ -1,0 +1,28 @@
+﻿@model FKA.Krivosinnyy.BLL.ViewModels.Relationship.RelationshipViewModel
+
+@{
+    ViewData["Title"] = "Edit PersonRelation";
+}
+<h3> Person Relationship</h3>
+<form method="post" asp-action="EditPersonRelation" asp-controller="Relationship">
+    <div asp-validation-summary=ModelOnly></div>
+    <div>
+        <img src="@Url.Content(Model.Person.Avatar.Path)" height="100px" width="100px" />
+        <input asp-for=PersonId value=@Model.Person.Id hidden />
+        <input asp-for=Person value=@Model.Person hidden />
+        <span> @Model.Person.LastName @Model.Person.FirstName @Model.Person.MiddleName</span>
+    </div>
+    <div>
+        <img src="@Url.Content(Model.RelatedPerson.Avatar.Path)" height="100px" width="100px" />
+        <input asp-for=RelatedPersonId value=@Model.RelatedPerson.Id hidden />
+        <input asp-for=RelatedPerson value=@Model.RelatedPerson hidden />
+        <span> @Model.Person.LastName @Model.Person.FirstName @Model.Person.MiddleName</span>
+    </div>
+    <div>
+        <span>
+            <select asp-for=@Model.Relation asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.DAL.Entities.Relation>()"></select>
+            <input asp-for=Relation value=@Model.Relation hidden />
+        </span>
+    </div>    
+    <input type="submit" value=" Изменить "/>
+</form>

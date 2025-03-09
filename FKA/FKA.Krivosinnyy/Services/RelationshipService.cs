@@ -37,11 +37,6 @@ namespace FKA.Krivosinnyy.Services
                 pers.Avatar ??= new DAL.Entities.File() { Path = String.Empty };
                 allPersonsWithRelType.Add(_mapper.Map<PersonWithRelTypeExt>(pers));
             }
-            //var allPersonsWithRelType = _relationshipRepository.GetAllWithRelType().ToList();
-            //foreach(var relation in allPersonsWithRelType)
-            //{
-            //    relation.Avatar ??= new DAL.Entities.File() { Path = String.Empty };
-            //}
             var myRelPersonsWithRelType = _relationshipRepository.GetAllByPersonWithRelType(personId);
             foreach (var relation in myRelPersonsWithRelType)
             {
@@ -122,9 +117,31 @@ namespace FKA.Krivosinnyy.Services
             //return _relationshipRepository.GetAllByPersonId(personId);
         }
 
-        public void RemovePersonRelation(int personId, Person person)
+        public RelationshipViewModel GetRelation(int personId, int relatedPersonId)
         {
-            throw new NotImplementedException();
+            var rel = _relationshipRepository.GetAll().Where(p => p.Person.Id == personId)
+                                                      .Where(r => r.RelatedPerson.Id == relatedPersonId).ElementAt(0);
+            var relViewModel = new RelationshipViewModel()
+            {
+                Id = rel.Id,
+                PersonId = rel.PersonId,
+                Person = rel.Person,
+                RelatedPersonId = rel.RelatedPersonId,
+                RelatedPerson = rel.RelatedPerson,
+                Relation = rel.Relation
+            };
+            return relViewModel;
+        }
+
+        public void SetRelation(RelationshipViewModel model)
+        {
+            var relationship = _relationshipRepository.GetAll().Where(p => p.Person.Id == model.PersonId)
+                                                      .Where(r => r.RelatedPerson.Id == model.RelatedPersonId).SingleOrDefault();
+            if (relationship != null)
+            {
+                relationship.Relation = model.Relation;
+                _relationshipRepository.Update(relationship);
+            }
         }
     }
 }

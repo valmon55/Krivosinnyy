@@ -40,18 +40,18 @@
         </div>
         <div>День рождения</div>
         <div>
-            <select asp-for="Day" id="ddlDay">
+            <select asp-for="Day" id="day">
                 <option value="">@Model.Day</option>
             </select>
             <span asp-validation-for="Day"></span>
 
             <select asp-for="Month" asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.BLL.ViewModels.Months>()"
-                    onchange="PopulateDays()" id="ddlMonth">
+                    onchange="CorrectDay()" id="month">
                 <option value="">@Model.Month</option>
             </select>
             <span asp-validation-for="Month"></span>
 
-            <select asp-for="Year" id="ddlYear"
+            <select asp-for="Year" id="year" onchange="CorrectDay()"
                     asp-items="Enumerable.Range(DateTime.Now.AddYears(-100).Year, DateTime.Now.AddYears(-12).Year - DateTime.Now.AddYears(-100).Year).Reverse().Select(x=> new SelectListItem(x.ToString(), x.ToString()))">
                 <option value="">@Model.Year</option>
             </select>
@@ -67,26 +67,76 @@
 
 
 <script type="text/javascript">
-    function PopulateDays() {
-        var ddlMonth = document.getElementById("ddlMonth");
-        var ddlYear = document.getElementById("ddlYear");
-        var ddlDay = document.getElementById("ddlDay");
+        document.addEventListener("DOMContentLoaded", 
+            function () { FillData(@Model.Year, @Model.Month, @Model.Day) });
 
-        var y = ddlYear.options[ddlYear.selectedIndex].value;
-        var m = ddlMonth.options[ddlMonth.selectedIndex].value != 0;
-        if (ddlMonth.options[ddlMonth.selectedIndex].value != 0 && ddlYear.options[ddlYear.selectedIndex].value != 0) {
-            var dayCount = 32 - new Date(ddlYear.options[ddlYear.selectedIndex].value, ddlMonth.options[ddlMonth.selectedIndex].value - 1, 32).getDate();
-            ddlDay.options.length = 0;
-            for (var i = 1; i <= dayCount; i++) {
-                AddOption(ddlDay, i, i);
+        function FillData(y, m, d) {
+            FillDays();
+            FillMonths();
+            FillYears();
+            SetCurrentDay(y, m, d);
+        }
+        function FillDays() {
+            var day = document.getElementById("day");
+            day.options.length = 0;
+            for (var i = 1; i <= 31; i++) {
+                AddOption(day, i, i);
             }
         }
-    }
+        function FillMonths() {
+            var month = document.getElementById("month");
+            month.options.length = 0;
+            AddOption(month, 1, "Январь");
+            AddOption(month, 2, "Февраль");
+            AddOption(month, 3, "Март");
+            AddOption(month, 4, "Апрель");
+            AddOption(month, 5, "Май");
+            AddOption(month, 6, "Июнь");
+            AddOption(month, 7, "Июль");
+            AddOption(month, 8, "Август");
+            AddOption(month, 9, "Сентябрь");
+            AddOption(month, 10, "Октябрь");
+            AddOption(month, 11, "Ноябрь");
+            AddOption(month, 12, "Декабрь");
+        }
+        function FillYears() {
+            var year = document.getElementById("year");
+            year.options.length = 0;
+            var currentDate = new Date();
+            for (var i = 0; i < 100; i++) {
+                AddOption(year, currentDate.getFullYear() - i, currentDate.getFullYear() - i)
+            }
+        }
+        function SetCurrentDay(y, m, d) {
+            var currentDate = new Date();
+            var month = document.getElementById("month");
+            var year = document.getElementById("year");
+            var day = document.getElementById("day");
 
-    function AddOption(ddl, text, value) {
-        var opt = document.createElement("OPTION");
-        opt.text = text;
-        opt.value = value;
-        ddl.options.add(opt);
-    }
+            year.value = y;
+            month.value = m;
+            CorrectDay();
+            day.value = d;
+        }
+        function CorrectDay() {
+            var month = document.getElementById("month");
+            var year = document.getElementById("year");
+            var day = document.getElementById("day");
+            
+            var selectedDay = day.value;
+            
+            if (month.value != 0 && year.value != 0) {
+                var dayCount = 32 - new Date(year.value, month.value - 1, 32).getDate();
+                day.options.length = 0;
+                for (var i = 1; i <= dayCount; i++) {
+                    AddOption(day, i, i);
+                }
+            }
+        }
+        function AddOption(ddl, value, text) {
+            var opt = document.createElement("option");
+            opt.text = text;
+            opt.value = value;
+            ddl.add(opt);
+        }
 </script>

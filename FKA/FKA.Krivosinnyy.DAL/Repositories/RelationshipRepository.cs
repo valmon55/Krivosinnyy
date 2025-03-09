@@ -28,7 +28,10 @@ namespace FKA.Krivosinnyy.DAL.Repositories
             Relationships = relationshipSet;
 
         }
-
+        public IEnumerable<Relationship> GetAll()
+        {
+            return Relationships.Include(p => p.Person).Include(r => r.RelatedPerson).AsEnumerable();
+        }
         public IEnumerable<Person> GetAllByPerson(int personId)
         {
             var rels = Relationships
@@ -151,6 +154,11 @@ namespace FKA.Krivosinnyy.DAL.Repositories
                     Relationships.Remove(r);
                 }
             }
+            _db.SaveChanges();
+        }
+        public void Update(Relationship item)
+        {
+            Relationships.Update(item);
             _db.SaveChanges();
         }
     }

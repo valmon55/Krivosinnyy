@@ -67,7 +67,13 @@ namespace FKA.Krivosinnyy
                 .ForMember(x => x.RelatedPersonId, opt => opt.MapFrom(c => c.RelatedPerson.Id))
                 .ForMember(x => x.RelatedPerson, opt => opt.MapFrom(c => c.RelatedPerson))
                 .ForMember(x => x.Relation, opt => opt.MapFrom(c => c.RelatedPerson.RelationType));
-
+            CreateMap<Relationship, RelationshipViewModel>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(c => c.Id))
+                .ForMember(x => x.PersonId, opt => opt.MapFrom(c => c.PersonId))
+                .ForMember(x => x.Person, opt => opt.MapFrom(c => c.Person))
+                .ForMember(x => x.RelatedPersonId, opt => opt.MapFrom(c => c.RelatedPersonId))
+                .ForMember(x => x.RelatedPerson, opt => opt.MapFrom(c => c.RelatedPerson));
+            CreateMap<RelationshipViewModel, Relationship>();
 
         }
     }
