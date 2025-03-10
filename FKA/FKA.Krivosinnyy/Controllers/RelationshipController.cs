@@ -62,6 +62,7 @@ namespace FKA.Krivosinnyy.Controllers
         [HttpPost]
         public IActionResult EditPersonRelation(RelationshipViewModel model)
         {
+            /// TODO: Объекты в model NULL
             _relationshipService.SetRelation(model);
             return RedirectToAction("ViewPerson", "Person", new { personId = model.PersonId } );
         }
