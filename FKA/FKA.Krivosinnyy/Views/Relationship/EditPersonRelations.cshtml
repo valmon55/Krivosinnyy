@@ -1,5 +1,5 @@
 ﻿@model FKA.Krivosinnyy.BLL.ViewModels.Relationship.EditPersonRelationsViewModel
-
+@using FKA.Krivosinnyy.DAL.Entities;
 
 @{
     ViewData["Title"] = "EditPersonRelation";
@@ -14,6 +14,20 @@
     <div asp-validation-summary=ModelOnly></div>
     @* <input asp-for=Person value=@Model.Person hidden /> *@
     <input asp-for=PersonId value=@Model.Person.Id hidden />
+
+    <input asp-for=Person.Id value=@Model.Person.Id hidden />
+    <input asp-for=Person.FirstName value=@Model.Person.FirstName hidden />
+    <input asp-for=Person.MiddleName value=@Model.Person.MiddleName hidden />
+    <input asp-for=Person.LastName value=@Model.Person.LastName hidden />
+    <input asp-for=Person.BirthDate value=@Model.Person.BirthDate hidden />
+    <input asp-for=Person.gender value=@Model.Person.gender hidden />
+    <input asp-for=Person.Avatar.Path value=@Model.Person.Avatar.Path hidden />
+    
+    @{
+        var relatedPerson = new List<PersonWithRelTypeExt>();
+        var personWithRelTypeExt = new PersonWithRelTypeExt() { Avatar = new FKA.Krivosinnyy.DAL.Entities.File() };
+    }
+
     @foreach (var person in Model.RelatedPersons)
     {
         <div>
@@ -35,12 +49,24 @@
                 @* <div>@person.Avatar.Path</div> *@
                 <img src="@Url.Content(person.Avatar.Path)" height="100px" width="100px" />
                 <span> @person.LastName @person.FirstName @person.MiddleName</span>
+
+                <input asp-for=@personWithRelTypeExt.Id value=@person.Id hidden />
+                <input asp-for=@personWithRelTypeExt.FirstName value=@person.FirstName type=hidden />
+                <input asp-for=@personWithRelTypeExt.MiddleName value=@person.MiddleName type=hidden />
+                <input asp-for=@personWithRelTypeExt.LastName value=@person.LastName type=hidden />
+                <input asp-for=@personWithRelTypeExt.BirthDate value=@person.BirthDate type=hidden />
+                <input asp-for=@personWithRelTypeExt.gender value=@person.gender type=hidden />
+                <input asp-for=@personWithRelTypeExt.Avatar.Path value=@{ person.Avatar.Path ??= string.Empty;} type=hidden />
                 <span>
-                    <select asp-for=@person.RelationType asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.DAL.Entities.Relation>()"></select>
+                    <select asp-for=@personWithRelTypeExt.RelationType asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.DAL.Entities.Relation>()"></select>
                 </span>
             </label>
+            @{
+                relatedPerson.Add(personWithRelTypeExt);
+            }
         </div>    
     }
+        <input asp-for=RelatedPersons value=@relatedPerson hidden />
     @* <input asp-for=@Model name="p" value=@Model hidden /> *@
     @* <input asp-for=CheckedRelatedPersonIds name=RelatedPersonsDic value=@Model.CheckedRelatedPersonIds hidden /> *@
     <input type="submit" value=" Изменить "/>
