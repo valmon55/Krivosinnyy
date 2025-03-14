@@ -67,6 +67,8 @@ namespace FKA.Krivosinnyy.Services
             var model = new EditPersonRelationsViewModel();
             var person = _personRepository.Get(personId);
 
+            person.Avatar ??= new DAL.Entities.File() { Path = String.Empty };
+
             var myRelPersonsWithRelType = _relationshipRepository.GetAllByPersonWithRelType(personId).ToList();
             foreach (var relation in myRelPersonsWithRelType)
             {

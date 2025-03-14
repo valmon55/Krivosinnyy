@@ -64,6 +64,8 @@ namespace FKA.Krivosinnyy.Controllers
         [HttpPost]
         public async Task<IActionResult> SetAvatar(int personId, IFormFile uploadedFile)
         {
+            //var uniqFileName = "/Files/" + Guid.NewGuid().ToString() + ".jpeg";
+
             if(uploadedFile != null)
             {
                 string path = "/Files/" + uploadedFile.FileName;
