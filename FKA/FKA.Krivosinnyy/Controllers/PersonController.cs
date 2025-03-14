@@ -64,19 +64,20 @@ namespace FKA.Krivosinnyy.Controllers
         [HttpPost]
         public async Task<IActionResult> SetAvatar(int personId, IFormFile uploadedFile)
         {
-            //var uniqFileName = "/Files/" + Guid.NewGuid().ToString() + ".jpeg";
+            var uniqFileName = "/Files/" + Guid.NewGuid().ToString() + ".jpeg";
 
             if(uploadedFile != null)
             {
-                string path = "/Files/" + uploadedFile.FileName;
-                using(var fileStream = new FileStream(_webHostEnvironment.WebRootPath + path, FileMode.Create))
+                //string path = "/Files/" + uploadedFile.FileName;
+                using(var fileStream = new FileStream(_webHostEnvironment.WebRootPath + uniqFileName, FileMode.Create))
                 {
                     await uploadedFile.CopyToAsync(fileStream);
                 }
                 ///FileService --Add   
-                _personService.SetAvatar(personId, path);
+                _personService.SetAvatar(personId, uniqFileName);
             }
-            return View("Person", _personService.ViewPerson(personId));
+            var rels = _relationshipService.PersonRelations(personId);
+            return View("PersonWithRelations", rels);
         }
         //[Authorize(Roles = "Admin")]
         [Route("EditPerson")]
