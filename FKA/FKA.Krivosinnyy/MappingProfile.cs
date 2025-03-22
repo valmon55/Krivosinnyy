@@ -14,11 +14,11 @@ namespace FKA.Krivosinnyy
                 .ForMember(x => x.BirthDate, opt => opt.MapFrom(c => new DateTime((int)c.Year, (int)c.Month, (int)c.Day)))
                 .ForMember(x => x.Email, opt => opt.MapFrom(c => c.Email))
                 .ForMember(x => x.UserName, opt => opt.MapFrom(c => c.Login));
-
             CreateMap<LoginViewModel, User>()
                 .ForMember(x => x.Email, opt => opt.MapFrom(c => c.Email))
                 .ForMember(x => x.PasswordHash, opt => opt.MapFrom(c => c.Password));
             CreateMap<User, UserViewModel>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(c => c.Id))
                 .ForMember(x => x.First_Name, opt => opt.MapFrom(c => c.First_Name))
                 .ForMember(x => x.Last_Name, opt => opt.MapFrom(c => c.Last_Name))
                 .ForMember(x => x.Middle_Name, opt => opt.MapFrom(c => c.Middle_Name))
@@ -27,6 +27,14 @@ namespace FKA.Krivosinnyy
                 .ForMember(x => x.Month, opt => opt.MapFrom(c => c.BirthDate.Month))
                 .ForMember(x => x.Year, opt => opt.MapFrom(c => c.BirthDate.Year))
                 .ForMember(x => x.Login, opt => opt.MapFrom(c => c.UserName));
+            CreateMap<UserViewModel,User>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(c => c.Id))
+                .ForMember(x => x.First_Name, opt => opt.MapFrom(c => c.First_Name))
+                .ForMember(x => x.Last_Name, opt => opt.MapFrom(c => c.Last_Name))
+                .ForMember(x => x.Middle_Name, opt => opt.MapFrom(c => c.Middle_Name))
+                .ForMember(x => x.Email, opt => opt.MapFrom(c => c.Email))
+                .ForMember(x => x.BirthDate, opt => opt.MapFrom(c => new DateTime((int)c.Year, (int)c.Month, (int)c.Day)))
+                .ForMember(x => x.UserName, opt => opt.MapFrom(c => c.Login));
             CreateMap<PersonViewModel, Person>()
                 .ForMember(x => x.Id, opt => opt.MapFrom( c => c.Id))
                 .ForMember(x => x.FirstName, opt => opt.MapFrom(c => c.FirstName))

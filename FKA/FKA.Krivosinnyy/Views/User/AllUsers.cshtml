@@ -13,5 +13,6 @@
         <span> @user.Last_Name @user.First_Name @user.Middle_Name</span>
         <span> @user.Day @((FKA.Krivosinnyy.BLL.ViewModels.Months)user.Month) @user.Year</span>
         <span> @user.Email</span>
+        <a method="get" asp-action="Edit" asp-controller="User" asp-route-userId=@user.Id>Редактировать</a>
     </div>    
 }

@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Contracts;
 
 namespace FKA.Krivosinnyy.BLL.ViewModels.User
 {
     public class UserViewModel
     {
+        public UInt32 Id { get; set; }
         [Required]
         [Display(Name = "Имя", Prompt = "Введите имя")]
         public string First_Name {  get; set; }        

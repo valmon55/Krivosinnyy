@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using FKA.Krivosinnyy.BLL.Extentions;
 using FKA.Krivosinnyy.BLL.ViewModels.User;
+using FKA.Krivosinnyy.DAL.Entities;
 using FKA.Krivosinnyy.DAL.Repositories;
 using FKA.Krivosinnyy.Services.IServices;
 
@@ -26,20 +28,24 @@ namespace FKA.Krivosinnyy.Services
             }
             return usersView;
         }
-
-        public void DeleteUser(uint userId)
+        public UserViewModel GetUser(UInt32 userId)
+        {
+            var user = _userRepository.Get(userId);
+            return _mapper.Map<UserViewModel>(user);
+        }
+        public void DeleteUser(UInt32 userId)
+        {
+            _userRepository.Delete(_userRepository.Get(userId));
+        }
+        public UserViewModel UpdateUser(UInt32 userId)
         {
             throw new NotImplementedException();
         }
-
-        public UserViewModel UpdateUser(uint userId)
+        public void UpdateUser(UserViewModel userView)
         {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateUser(UserViewModel user)
-        {
-            throw new NotImplementedException();
+            var user = _userRepository.Get(userView.Id);
+            user.Convert(userView);
+            _userRepository.Update(user);
         }
     }
 }
