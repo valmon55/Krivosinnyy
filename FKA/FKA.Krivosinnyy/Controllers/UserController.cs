@@ -134,6 +134,43 @@ namespace FKA.Krivosinnyy.Controllers
         {
             return View(_userService.AllUsers());
         }
+        [Route("ChangePassword")]
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            return View(new ChangePasswordViewModel() { Password = "", NewPassword = "", NewPasswordConfirm = ""});
+        }
+        [Route("ChangePassword")]
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var userViewModel = _userService.GetUser(model.Id);
+                var user = _mapper.Map<User>(userViewModel);
+                if(user != null)
+                {
+                    ///Обновляем пароль
+                    var result = await _userManager.ChangePasswordAsync(user, model.Password, model.NewPassword);
+                    if(result.Succeeded)
+                    {
+                        return RedirectToAction("AllUsers");
+                    }
+                    else
+                    {
+                        foreach(var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Пользователь не найден");
+                }
+            }
+            return View(model);            
+        }
         [Authorize(Roles = "Admin")]
         [Route("Edit")]
         [HttpGet]
