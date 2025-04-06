@@ -90,32 +90,32 @@ namespace FKA.Krivosinnyy.Controllers
                 if (signedUser == null)
                 {
                     ModelState.AddModelError("Login", "Неверный логин");
-                }
-                var role = _userManager.GetRolesAsync(user).Result.FirstOrDefault();
-                if (role is null)
-                {
-                    if (signedUser.UserName == "Admin")
-                    {
-                        await _userManager.AddToRoleAsync(signedUser, "Admin");
-                    }
-                    else
-                    {
-                        var defaultRole = _roleManager.Roles.Where(r => r.Name != "Admin").FirstOrDefault();
-                        await _userManager.AddToRoleAsync(signedUser, "Admin");
-                    }
-                }
-                if (signedUser != null)
-                {
-                    var claims = new List<Claim>()
-                    {
-                        new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                        new Claim(ClaimsIdentity.DefaultRoleClaimType, _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault())
-                    };
-                    await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent: false, claims);
+                    return View(model);
                 }
                 else
-                {
-
+                { 
+                    var role = _userManager.GetRolesAsync(user).Result.FirstOrDefault();
+                    if (role is null)
+                    {
+                        if (signedUser.UserName == "Admin")
+                        {
+                            await _userManager.AddToRoleAsync(signedUser, "Admin");
+                        }
+                        else
+                        {
+                            var defaultRole = _roleManager.Roles.Where(r => r.Name != "Admin").FirstOrDefault();
+                            await _userManager.AddToRoleAsync(signedUser, "Admin");
+                        }
+                    }
+                    if (signedUser != null)
+                    {
+                        var claims = new List<Claim>()
+                        {
+                            new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                            new Claim(ClaimsIdentity.DefaultRoleClaimType, _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault())
+                        };
+                        await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent: false, claims);
+                    }
                 }
             }
             return RedirectToAction("Index", "Home");
@@ -147,7 +147,8 @@ namespace FKA.Krivosinnyy.Controllers
             if(ModelState.IsValid)
             {
                 var userViewModel = _userService.GetUser(model.Id);
-                var user = _mapper.Map<User>(userViewModel);
+                /// Нужно так делать, чтобы заполнился PasswordHash
+                var user = await _userManager.FindByEmailAsync(userViewModel.Email);
                 if(user != null)
                 {
                     ///Обновляем пароль
