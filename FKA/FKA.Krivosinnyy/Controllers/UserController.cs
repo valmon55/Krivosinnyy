@@ -136,9 +136,9 @@ namespace FKA.Krivosinnyy.Controllers
         }
         [Route("ChangePassword")]
         [HttpGet]
-        public IActionResult ChangePassword()
+        public IActionResult ChangePassword(UInt32 Id)
         {
-            return View(new ChangePasswordViewModel() { Password = "", NewPassword = "", NewPasswordConfirm = ""});
+            return View(new ChangePasswordViewModel() { Id = Id, Password = "", NewPassword = "", NewPasswordConfirm = ""});
         }
         [Route("ChangePassword")]
         [HttpPost]
