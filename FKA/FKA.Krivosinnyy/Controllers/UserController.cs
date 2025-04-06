@@ -103,8 +103,12 @@ namespace FKA.Krivosinnyy.Controllers
                         }
                         else
                         {
+                            if(_roleManager.Roles.Where(r => r.Name != "Admin").FirstOrDefault() is null)
+                            {
+                                await _roleManager.CreateAsync(new Role() { Name = "User", Description = "Пользователь сайта" });
+                            }
                             var defaultRole = _roleManager.Roles.Where(r => r.Name != "Admin").FirstOrDefault();
-                            await _userManager.AddToRoleAsync(signedUser, "Admin");
+                            await _userManager.AddToRoleAsync(signedUser, defaultRole.Name);
                         }
                     }
                     if (signedUser != null)
