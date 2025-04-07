@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using FKA.Krivosinnyy.BLL.ViewModels.User;
 using FKA.Krivosinnyy.DAL.Entities;
-using FKA.Krivosinnyy.Services;
 using FKA.Krivosinnyy.Services.IServices;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using FKA.Krivosinnyy.Services;
+using System.Security.Authentication;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace FKA.Krivosinnyy.Controllers
 {
@@ -83,44 +86,18 @@ namespace FKA.Krivosinnyy.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (ModelState.IsValid)
+            if(ModelState.IsValid)
             {
-                var user = _mapper.Map<User>(model);
-                User signedUser = _userManager.Users.FirstOrDefault(u => u.Email == model.Email);
-                if (signedUser == null)
+                var result = await _userService.Login(model);
+                if(result.Succeeded)
                 {
-                    ModelState.AddModelError("Login", "Неверный логин");
-                    return View(model);
+                    return RedirectToAction("Index", "Home");
                 }
                 else
-                { 
-                    var role = _userManager.GetRolesAsync(user).Result.FirstOrDefault();
-                    if (role is null)
-                    {
-                        if (signedUser.UserName == "Admin")
-                        {
-                            await _userManager.AddToRoleAsync(signedUser, "Admin");
-                        }
-                        else
-                        {
-                            if(_roleManager.Roles.Where(r => r.Name != "Admin").FirstOrDefault() is null)
-                            {
-                                await _roleManager.CreateAsync(new Role() { Name = "User", Description = "Пользователь сайта" });
-                            }
-                            var defaultRole = _roleManager.Roles.Where(r => r.Name != "Admin").FirstOrDefault();
-                            await _userManager.AddToRoleAsync(signedUser, defaultRole.Name);
-                        }
-                    }
-                    if (signedUser != null)
-                    {
-                        var claims = new List<Claim>()
-                        {
-                            new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                            new Claim(ClaimsIdentity.DefaultRoleClaimType, _userManager.GetRolesAsync(signedUser).Result.FirstOrDefault())
-                        };
-                        await _signInManager.SignInWithClaimsAsync(signedUser, isPersistent: false, claims);
-                    }
+                {
+                    ModelState.AddModelError("", "Неправильный лигин или пароль");
                 }
+                return View(model);
             }
             return RedirectToAction("Index", "Home");
         }
