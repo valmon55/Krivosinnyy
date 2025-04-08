@@ -21,11 +21,13 @@ namespace FKA.Krivosinnyy.Controllers
         private readonly RoleManager<Role> _roleManager;
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
+        private readonly IEmailSender _emailSender;
         public UserController(UserManager<User> userManager,
                 SignInManager<User> signInManager,                
                 RoleManager<Role> roleManager,
                 IMapper mapper,
-                IUserService userService
+                IUserService userService,
+                IEmailSender emailSender
             )
         {
             _userManager = userManager;
@@ -33,6 +35,7 @@ namespace FKA.Krivosinnyy.Controllers
             _roleManager = roleManager;
             _mapper = mapper;
             _userService = userService;
+            _emailSender = emailSender;
         }
         //public UserController() { }
         [Route("Register")]
@@ -91,6 +94,8 @@ namespace FKA.Krivosinnyy.Controllers
                 var result = await _userService.Login(model);
                 if(result.Succeeded)
                 {
+                    try { _emailSender.Sent(); } 
+                    catch (Exception ex) { ModelState.AddModelError("", ex.Message); return View(model); }
                     return RedirectToAction("Index", "Home");
                 }
                 else

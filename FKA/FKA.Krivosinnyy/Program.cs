@@ -37,6 +37,7 @@ namespace FKA.Krivosinnyy
             builder.Services.AddScoped<IFileRepository, FileRepository>();
             builder.Services.AddScoped<IRelationshipRepository, RelationshipRepository>();
             builder.Services.AddTransient<IRelationshipService, RelationshipService>();
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             builder.Services.AddIdentity<User, Role>(options =>
             {
