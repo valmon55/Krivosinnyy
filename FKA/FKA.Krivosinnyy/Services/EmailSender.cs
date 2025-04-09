@@ -7,13 +7,13 @@ namespace FKA.Krivosinnyy.Services
 {
     public class EmailSender : IEmailSender
     {
-        public void Sent()
+        public void Sent(string email, string subject, string message)
         {
             var from = new MailAddress("freemart@yandex.ru", "Fedor");
-            var to = new MailAddress("fedor_ka@mail.ru", "fedor kr");
+            var to = new MailAddress(email, "");
             var m = new MailMessage(from, to);
-            m.Subject = "Test Email";
-            m.Body = "<h2>Письмо-тест для работы сайта</h2>";
+            m.Subject = subject;
+            m.Body = message; //"<h2>Письмо-тест для работы сайта</h2>";
             m.IsBodyHtml = true;
             var client = new SmtpClient();
             /// Яндекс

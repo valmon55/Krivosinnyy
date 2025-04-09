@@ -45,6 +45,7 @@ namespace FKA.Krivosinnyy
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
             })
+                .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<MyFamilyContext>();
 
             builder.Services.AddAuthentication(options => options.DefaultScheme = "Cookies")

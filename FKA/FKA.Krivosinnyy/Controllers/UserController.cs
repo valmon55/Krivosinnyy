@@ -61,6 +61,19 @@ namespace FKA.Krivosinnyy.Controllers
                 var result = await _userManager.CreateAsync(user, model.PasswordReg);
                 if (result.Succeeded)
                 {
+                    // генерация токена пользователя
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.Action(
+                        "ConfirmEmail",
+                        "User",
+                        new { email = model.Email, code = code},
+                        protocol: HttpContext.Request.Scheme
+                        );
+                    _emailSender.Sent(model.Email, "Подтвердите ваш аккаунт",
+                        $"Уважаемый {user.First_Name}! {Environment.NewLine} Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>");
+
+                    return Content("Для завершения регистрации проверьте электронную почту и перейдите по ссылке, указанной в письме");
+
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     //var currentUser = await _userManager.FindByIdAsync(user.Id);
                     var currentUser = await _userManager.FindByEmailAsync(user.Email);
@@ -70,13 +83,39 @@ namespace FKA.Krivosinnyy.Controllers
                 }
                 else
                 {
+                    //если не создался корректно - удаляем
+                    await _userManager.DeleteAsync(user);
                     foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
                 }
             }
+            return View(model);
             return RedirectToAction("Index", "Home");
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string email, string code)
+        {
+            if(email == null || code == null)
+            {
+                return View("Error");
+            }
+            var user = await _userManager.FindByEmailAsync(email);
+            if(user  == null)
+            {
+                return View("Error");
+            }
+            var result = await _userManager.ConfirmEmailAsync(user, code);
+            if(result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View("Error");
+            }
         }
 
         [Route("Login")]
@@ -94,7 +133,7 @@ namespace FKA.Krivosinnyy.Controllers
                 var result = await _userService.Login(model);
                 if(result.Succeeded)
                 {
-                    try { _emailSender.Sent(); } 
+                    try { _emailSender.Sent("fedor_ka@mail.ru", "Test message", "<h2>Письмо-тест для работы сайта</h2>"); } 
                     catch (Exception ex) { ModelState.AddModelError("", ex.Message); return View(model); }
                     return RedirectToAction("Index", "Home");
                 }
