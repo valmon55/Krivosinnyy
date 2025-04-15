@@ -24,6 +24,16 @@ namespace FKA.Krivosinnyy.Services
             client.UseDefaultCredentials = false;
             client.Credentials = new NetworkCredential("freemart@yandex.ru", "zjjaevixqlwwcpnf");
             client.Send(m);
+
+            ///// Mail не работает...
+            //client.Host = "smtp.mail.ru";
+            //client.Port = 25; // 465 ?
+            //client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            //client.EnableSsl = true;
+            //client.UseDefaultCredentials = false;
+            //client.Credentials = new NetworkCredential("fedor_ka@mail.ru", "yXiSawzuWrdar1WrrPAi");
+            //client.Send(m);
+
         }
     }
 }

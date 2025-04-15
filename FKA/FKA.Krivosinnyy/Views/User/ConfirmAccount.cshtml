@@ -1,0 +1,22 @@
+﻿@model FKA.Krivosinnyy.BLL.ViewModels.User.ConfirmAccountViewModel
+
+@{
+    ViewData["Title"] = "ChangePassword";
+}
+<h3>ChangePassword</h3>
+<form method="post" asp-action="ConfirmAccount" asp-controller="User">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="mrgn">
+        <label asp-for="Email"></label><br />
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div class="mrgn">
+        <label asp-for="Code"></label><br />
+        <input asp-for="Code" />
+        <span asp-validation-for="Code"></span>
+    </div>
+    <div>
+        <input type="submit" value="Подтвердить аккаунт" />
+    </div>
+</form>

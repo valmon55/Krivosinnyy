@@ -11,6 +11,7 @@ using System.Security.Authentication;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace FKA.Krivosinnyy.Controllers
 {
@@ -23,7 +24,7 @@ namespace FKA.Krivosinnyy.Controllers
         private readonly IUserService _userService;
         private readonly IEmailSender _emailSender;
         public UserController(UserManager<User> userManager,
-                SignInManager<User> signInManager,                
+                SignInManager<User> signInManager,
                 RoleManager<Role> roleManager,
                 IMapper mapper,
                 IUserService userService,
@@ -48,7 +49,7 @@ namespace FKA.Krivosinnyy.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 //Админа надо создавать при построении проекта
                 var userRole = new Role() { Name = "Admin", Description = "Администратор" };
@@ -58,41 +59,102 @@ namespace FKA.Krivosinnyy.Controllers
                     await _roleManager.CreateAsync(userRole);
                 }
                 var user = _mapper.Map<User>(model);
-                var result = await _userManager.CreateAsync(user, model.PasswordReg);
-                if (result.Succeeded)
+
+                if (_userManager.FindByEmailAsync(user.Email).Result != null)
                 {
-                    // генерация токена пользователя
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Action(
-                        "ConfirmEmail",
-                        "User",
-                        new { email = model.Email, code = code},
-                        protocol: HttpContext.Request.Scheme
-                        );
-                    _emailSender.Sent(model.Email, "Подтвердите ваш аккаунт",
-                        $"Уважаемый {user.First_Name}! {Environment.NewLine} Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>");
-
-                    return Content("Для завершения регистрации проверьте электронную почту и перейдите по ссылке, указанной в письме");
-
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    //var currentUser = await _userManager.FindByIdAsync(user.Id);
-                    var currentUser = await _userManager.FindByEmailAsync(user.Email);
-
-                    await _userManager.AddToRoleAsync(currentUser, userRole.Name);
-                    await _signInManager.RefreshSignInAsync(currentUser);
+                    ModelState.AddModelError("", "Пользователь с таким Email уже зарегистрирован");
+                    return View(model);
                 }
                 else
                 {
-                    //если не создался корректно - удаляем
-                    await _userManager.DeleteAsync(user);
-                    foreach (var error in result.Errors)
+                    var result = await _userManager.CreateAsync(user, model.PasswordReg);
+                    if (result.Succeeded)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        //// генерация токена пользователя
+                        //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        //var callbackUrl = Url.Action(
+
+                        //    "ConfirmEmail",
+                        //    "User",
+                        //    new { email = model.Email, code = code },
+                        //    protocol: HttpContext.Request.Scheme
+                        //    );
+                        //// не получается отправить почту((
+                        //_emailSender.Sent(model.Email, "Подтвердите ваш аккаунт",
+                        //    $"Уважаемый {user.First_Name}! {Environment.NewLine} Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>link</a>");
+
+                        //return Content("Для завершения регистрации проверьте электронную почту и перейдите по ссылке, указанной в письме");
+
+                        //var rand = new Random(1000000);
+                        //var code = rand.Next();
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        _emailSender.Sent(model.Email, "test",
+                            $"{user.First_Name}! {Environment.NewLine} Код: <h2> {code} </h2>");
+
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        //var currentUser = await _userManager.FindByIdAsync(user.Id);
+                        var currentUser = await _userManager.FindByEmailAsync(user.Email);
+
+                        await _userManager.AddToRoleAsync(currentUser, userRole.Name);
+                        await _signInManager.RefreshSignInAsync(currentUser);
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        //если не создался корректно - удаляем
+                        await _userManager.DeleteAsync(user);
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
                     }
                 }
             }
             return View(model);
-            return RedirectToAction("Index", "Home");
+        }
+        [Route("ConfirmAccount")]
+        [HttpGet]
+        public IActionResult ConfirmAccount(UInt32 userId)
+        {
+            var user = _userService.GetUser(userId);
+            var confAcc = new ConfirmAccountViewModel();
+            if (user != null)
+            {
+                confAcc.Id = userId;
+                confAcc.Email = user.Email;
+            }
+            return View("ConfirmAccount", confAcc);
+        }
+        [Route("ConfirmAccount")]
+        [HttpPost]
+        public async Task<IActionResult> ConfirmAccount(ConfirmAccountViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                if (model.Email == null || model.Code == null)
+                {
+                    return View("Error");
+                }
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                {
+                    return View("Error");
+                }
+                var result = await _userManager.ConfirmEmailAsync(user, model.Code);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return View("Error");
+                }
+            }
+            else
+            {
+                return View(model);
+            }
         }
         [HttpGet]
         [AllowAnonymous]
