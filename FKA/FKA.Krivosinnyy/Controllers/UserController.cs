@@ -156,6 +156,70 @@ namespace FKA.Krivosinnyy.Controllers
                 return View(model);
             }
         }
+        [Route("ForgotPassword")]
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [Route("ForgotPassword")]
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null )
+            {
+                ModelState.AddModelError("", "Пользователь не найден!");
+                return View(model); //?
+            }
+            if(!(await _userManager.IsEmailConfirmedAsync(user)))
+            {
+                ModelState.AddModelError("",$"Пользователь {model.Email} не активирован!");
+                return View(model);
+            }
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            _emailSender.Sent(model.Email, "test reset", $"{user.First_Name}! {Environment.NewLine} Код: <h2> {code} </h2>");
+
+            return RedirectToAction("ResetPassword",new { email = model.Email });
+        }
+        [Route("ResetPassword")]
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPassword(string email)
+        {
+            return View(new ResetPasswordViewModel() { Email = email });
+        }
+        [Route("ResetPassword")]
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Не все поля заполнены!");
+                return View(model);
+            }
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if(user == null)
+            {
+                ModelState.AddModelError("", "Пользователь не найден!");
+                return View(model);
+            }
+            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            if(result.Succeeded)
+            {
+                return View("ResetPasswordConfirmation");
+            }
+            foreach(var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+            return View(model);
+        }
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string email, string code)
@@ -195,8 +259,6 @@ namespace FKA.Krivosinnyy.Controllers
                 var result = await _userService.Login(model);
                 if(result.Succeeded)
                 {
-                    try { _emailSender.Sent("fedor_ka@mail.ru", "Test message", "<h2>Письмо-тест для работы сайта</h2>"); } 
-                    catch (Exception ex) { ModelState.AddModelError("", ex.Message); return View(model); }
                     return RedirectToAction("Index", "Home");
                 }
                 else
