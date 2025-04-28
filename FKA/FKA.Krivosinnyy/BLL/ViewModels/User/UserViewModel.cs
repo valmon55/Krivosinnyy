@@ -35,16 +35,16 @@ namespace FKA.Krivosinnyy.BLL.ViewModels.User
         [Display(Name = "День")]
         public int? Day { get; set; }
 
-        [Required(ErrorMessage = "Обязательно к заполнению")]
-        [DataType(DataType.Password)]
-        [Display(Name = "Пароль", Prompt = "Введите пароль")]
-        [StringLength(24, ErrorMessage = "Пароль должен иметь не менее {0} символов", MinimumLength = 6)]
-        public string Password { get; set; }
+        //[Required(ErrorMessage = "Обязательно к заполнению")]
+        //[DataType(DataType.Password)]
+        //[Display(Name = "Пароль", Prompt = "Введите пароль")]
+        //[StringLength(24, ErrorMessage = "Пароль должен иметь не менее {0} символов", MinimumLength = 6)]
+        //public string Password { get; set; }
 
         [Required(ErrorMessage = "Поле Логин обязательно к заполнению")]
         [DataType(DataType.Text)]
         [Display(Name = "Логин", Description = "Введите логин")]
         public string Login {  get; set; }
-        public string Foto { get; set; }
+        public string? Foto { get; set; }
     }
 }

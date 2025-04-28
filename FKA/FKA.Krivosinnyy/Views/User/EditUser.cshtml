@@ -5,57 +5,57 @@
 }
 <h3>Редактирование пользователя</h3>
 <form method="post" asp-action="Edit" asp-controller="User">
-    <div asp-validation-summary="ModelOnly"></div>
+    <div asp-validation-summary="ModelOnly"  class="text-danger"></div>
     <input asp-for="Id" value=@Model.Id hidden />
-    <div>
+    <div class="form-group">
         <label asp-for="First_Name"></label><br />
-        <input asp-for="First_Name" />
-        <span asp-validation-for="First_Name"></span>
+        <input asp-for="First_Name" class="form-control" />
+        <span asp-validation-for="First_Name" class="text-danger"></span>
     </div>
-    <div>
+    <div class="form-group">
         <label asp-for="Middle_Name"></label><br />
-        <input asp-for="Middle_Name" />
-        <span asp-validation-for="Middle_Name"></span>
+        <input asp-for="Middle_Name" class="form-control" />
+        <span asp-validation-for="Middle_Name" class="text-danger"></span>
     </div>
-    <div>
+    <div class="form-group">
         <label asp-for="Last_Name"></label><br />
-        <input asp-for="Last_Name" />
-        <span asp-validation-for="Last_Name"></span>
+        <input asp-for="Last_Name" class="form-control" />
+        <span asp-validation-for="Last_Name" class="text-danger"></span>
     </div>
-    <div>
+    <div class="form-group">
         <label asp-for="Email"></label><br />
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div>День рождения</div>
-    <div>
+    <div class="form-group">
         <select asp-for="Day" id="day">
             <option value="">@Model.Day</option>
         </select>
-        <span asp-validation-for="Day"></span>
+        <span asp-validation-for="Day" class="text-danger"></span>
 
         <select asp-for="Month" asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.BLL.ViewModels.Months>()"
                 onchange="CorrectDay()" id="month">
             <option value="">@Model.Month</option>
         </select>
-        <span asp-validation-for="Month"></span>
+        <span asp-validation-for="Month" class="text-danger"></span>
 
-        <select asp-for="Year" id="year" onchange="CorrectDay()"
+        <select asp-for="Year" id="year" onchange="CorrectDay()" 
             asp-items="Enumerable.Range(DateTime.Now.AddYears(-100).Year, DateTime.Now.AddYears(-12).Year - DateTime.Now.AddYears(-100).Year).Reverse().Select(x=> new SelectListItem(x.ToString(), x.ToString()))">
             <option value="">@Model.Year</option>
         </select>
-        <span asp-validation-for="Year"></span>
+        <span asp-validation-for="Year" class="text-danger"></span>
     </div>
-    <div>
+    <div class ="form-group">
         <a method="get" asp-controller="User" asp-action="ChangePassword" asp-route-Id=@Model.Id>Изменить пароль</a>
     </div>
-    <div class="mrgn">
+    <div class="form-group">
         <label asp-for="Login"></label><br />
-        <input asp-for="Login" />
-        <span asp-validation-for="Login"></span>
+        <input asp-for="Login" class="form-control" />
+        <span asp-validation-for="Login" class="text-danger"></span>
     </div>
     <div>
-        <input type="submit" value="Сохранить" />
+        <input type="submit" value="Сохранить" class="btn btn-primary" />
     </div>
 </form>
 

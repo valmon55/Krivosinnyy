@@ -5,60 +5,61 @@
 }
 <h3>Register</h3>
 <form method="post" asp-action="Register" asp-controller="User">
-    <div asp-validation-summary="ModelOnly"></div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div>
         <label asp-for="First_Name"></label><br />
         <input asp-for="First_Name" />
-        <span asp-validation-for="First_Name"></span>
+        <span asp-validation-for="First_Name" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="Middle_Name"></label><br />
         <input asp-for="Middle_Name" />
-        <span asp-validation-for="Middle_Name"></span>
+        <span asp-validation-for="Middle_Name" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="Last_Name"></label><br />
         <input asp-for="Last_Name" />
-        <span asp-validation-for="Last_Name"></span>
+
+        <span asp-validation-for="Last_Name" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="Email"></label><br />
         <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div>День рождения</div>
     <div>
         <select asp-for="Day" id="ddlDay">
             <option value="">@Model.Day</option>
         </select>
-        <span asp-validation-for="Day"></span>
+        <span asp-validation-for="Day" class="text-danger"></span>
 
         <select asp-for="Month" asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.BLL.ViewModels.Months>()"
                 onchange="PopulateDays()" id="ddlMonth">
             <option value="">@Model.Month</option>
         </select>
-        <span asp-validation-for="Month"></span>
+        <span asp-validation-for="Month" class="text-danger"></span>
 
         <select asp-for="Year" id="ddlYear"
             asp-items="Enumerable.Range(DateTime.Now.AddYears(-100).Year, DateTime.Now.AddYears(-12).Year - DateTime.Now.AddYears(-100).Year).Reverse().Select(x=> new SelectListItem(x.ToString(), x.ToString()))">
             <option value="">@Model.Year</option>
         </select>
-        <span asp-validation-for="Year"></span>
+        <span asp-validation-for="Year" class="text-danger"></span>
     </div>
     <div class="mrgn">
         <label asp-for="PasswordReg"></label><br />
         <input asp-for="PasswordReg" />
-        <span asp-validation-for="PasswordReg"></span>
+        <span asp-validation-for="PasswordReg" class="text-danger"></span>
     </div>
     <div class="mrgn">
         <label asp-for="PasswordConfirm"></label><br />
         <input asp-for="PasswordConfirm" />
-        <span asp-validation-for="PasswordConfirm"></span>
+        <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
     </div>
     <div class="mrgn">
         <label asp-for="Login"></label><br />
         <input asp-for="Login" />
-        <span asp-validation-for="Login"></span>
+        <span asp-validation-for="Login" class="text-danger"></span>
     </div>
     <div>
         <input type="submit" value="Зарегистрироваться" />

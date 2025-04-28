@@ -6,40 +6,40 @@
 <h3>Add Person</h3>
 
 <form method="post" asp-action="AddPerson" asp-controller="Person">
-    <div asp-validation-summary="ModelOnly"></div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div>
         <label asp-for="FirstName"></label><br />
         <input asp-for="FirstName" />
-        <span asp-validation-for="FirstName"></span>
+        <span asp-validation-for="FirstName" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="MiddleName"></label><br />
         <input asp-for="MiddleName" />
-        <span asp-validation-for="MiddleName"></span>
+        <span asp-validation-for="MiddleName" class="text-danger"></span>
     </div>
     <div>
         <label asp-for="LastName"></label><br />
         <input asp-for="LastName" />
-        <span asp-validation-for="LastName"></span>
+        <span asp-validation-for="LastName" class="text-danger"></span>
     </div>
     <div>День рождения</div>
     <div>
         <select asp-for="Day" id="ddlDay">
             <option value="">@Model.Day</option>
         </select>
-        <span asp-validation-for="Day"></span>
+        <span asp-validation-for="Day" class="text-danger"></span>
 
         <select asp-for="Month" asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.BLL.ViewModels.Months>()"
                 onchange="PopulateDays()" id="ddlMonth">
             <option value="">@Model.Month</option>
         </select>
-        <span asp-validation-for="Month"></span>
+        <span asp-validation-for="Month" class="text-danger"></span>
 
         <select asp-for="Year" id="ddlYear"
                 asp-items="Enumerable.Range(DateTime.Now.AddYears(-100).Year, DateTime.Now.AddYears(-12).Year - DateTime.Now.AddYears(-100).Year).Reverse().Select(x=> new SelectListItem(x.ToString(), x.ToString()))">
             <option value="">@Model.Year</option>
         </select>
-        <span asp-validation-for="Year"></span>
+        <span asp-validation-for="Year" class="text-danger"></span>
     </div>
     <div>
         <input type="submit" value="Добавить" />

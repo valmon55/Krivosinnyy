@@ -11,7 +11,7 @@
 </div>
 <div> Возможно вы их знаете: </div>
 <form method="post" asp-action="EditPersonRelations" asp-controller="Relationship" >
-    <div asp-validation-summary=ModelOnly></div>
+    <div asp-validation-summary=ModelOnly class="text-danger"></div>
     @* <input asp-for=Person value=@Model.Person hidden /> *@
     <input asp-for=PersonId value=@Model.Person.Id hidden />
 

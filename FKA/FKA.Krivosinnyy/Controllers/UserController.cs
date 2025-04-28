@@ -326,19 +326,22 @@ namespace FKA.Krivosinnyy.Controllers
         [HttpGet]
         public IActionResult Edit(UInt32 userId)
         {
-            return View("EditUser",_userService.GetUser(userId));///
+            return View("EditUser",_userService.GetUser(userId));
         }
         [Authorize(Roles = "Admin")]
         [Route("Edit")]
         [HttpPost]
         public IActionResult Edit(UserViewModel model)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    _userService.UpdateUser(model);
-            //}
-            _userService.UpdateUser(model);
-            return RedirectToAction("AllUsers");
+            if (ModelState.IsValid)
+            {
+                _userService.UpdateUser(model);
+                return RedirectToAction("AllUsers");
+            }
+            else
+            {
+                return View("EditUser",model);
+            }            
         }
         [Authorize(Roles = "Admin")]
         [Route("Delete")]
