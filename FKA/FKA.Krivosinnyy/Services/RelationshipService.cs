@@ -118,7 +118,14 @@ namespace FKA.Krivosinnyy.Services
             throw new NotImplementedException();
             //return _relationshipRepository.GetAllByPersonId(personId);
         }
+        public AllRelationshipsViewModel AllRelationships()
+        {
+            var rels = _relationshipRepository.GetAll().ToList();
+            var relsViewModel = new  AllRelationshipsViewModel();
+            relsViewModel.Relationships.Add(_mapper.Map<RelationshipViewModel>(rels));
 
+            return relsViewModel;
+        }
         public RelationshipViewModel GetRelation(int personId, int relatedPersonId)
         {
             var rel = _relationshipRepository.GetAll().Where(p => p.Person.Id == personId)

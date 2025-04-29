@@ -8,6 +8,7 @@ namespace FKA.Krivosinnyy.Services.IServices
     {
         public List<PersonRelationsViewModel> AllPersonRelations(int personId);
         public RelationshipViewModel GetRelation(int personId, int relatedPersonId);
+        public AllRelationshipsViewModel AllRelationships();
         public void SetRelation(RelationshipViewModel model);
         public EditPersonRelationsViewModel PersonRelations(int personId);
         public EditPersonRelationsViewModel EditPersonRelations(int personId);

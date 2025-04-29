@@ -66,5 +66,11 @@ namespace FKA.Krivosinnyy.Controllers
             _relationshipService.SetRelation(model);
             return RedirectToAction("ViewPerson", "Person", new { personId = model.PersonId } );
         }
+        [Route("FamilyTree")]
+        [HttpGet]
+        public AllRelationshipsViewModel GetRelationships()
+        {
+            return _relationshipService.AllRelationships();
+        }
     }
 }
