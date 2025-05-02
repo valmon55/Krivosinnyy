@@ -68,9 +68,9 @@ namespace FKA.Krivosinnyy.Controllers
         }
         [Route("FamilyTree")]
         [HttpGet]
-        public AllRelationshipsViewModel GetRelationships()
+        public IActionResult GetRelationships()
         {
-            return _relationshipService.AllRelationships();
+            return View("FamilyTree",_relationshipService.AllRelationships());
         }
     }
 }

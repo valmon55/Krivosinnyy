@@ -121,10 +121,14 @@ namespace FKA.Krivosinnyy.Services
         public AllRelationshipsViewModel AllRelationships()
         {
             var rels = _relationshipRepository.GetAll().ToList();
-            var relsViewModel = new  AllRelationshipsViewModel();
-            relsViewModel.Relationships.Add(_mapper.Map<RelationshipViewModel>(rels));
+            var allRelsViewModel = new AllRelationshipsViewModel() { Relationships = new List<RelationshipViewModel>() };
+            foreach(var rel in rels)
+            {
+                allRelsViewModel.Relationships.Add(_mapper.Map<RelationshipViewModel>(rel));
+            }
+            //relsViewModel.Relationships.Add(_mapper.Map<RelationshipViewModel>(rels));
 
-            return relsViewModel;
+            return allRelsViewModel;
         }
         public RelationshipViewModel GetRelation(int personId, int relatedPersonId)
         {
