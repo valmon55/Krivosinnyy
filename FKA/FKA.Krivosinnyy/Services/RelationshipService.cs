@@ -145,7 +145,48 @@ namespace FKA.Krivosinnyy.Services
             };
             return relViewModel;
         }
+        public PersonWithParentsViewModel GetPersonParents(int personId)
+        {
+            var father = _personRepository.Get(
+                    _relationshipRepository.GetAll().
+                    FirstOrDefault(p => p.PersonId == personId &&
+                        p.Relation == Relation.Father).RelatedPersonId);
 
+            var mother = _personRepository.Get(
+                    _relationshipRepository.GetAll().
+                    FirstOrDefault(p => p.PersonId == personId &&
+                        p.Relation == Relation.Mother).RelatedPersonId);
+
+            return new PersonWithParentsViewModel()
+            {
+                Level = 0,
+                Person = _personRepository.Get(personId),
+                Person_Father = father,
+                Person_Mother = mother
+            };
+        }
+        public List<PersonWithParentsViewModel> GetAllPersonWithParents()
+        {
+            var personsWithParents = new List<PersonWithParentsViewModel>();
+            var personWithParents = new PersonWithParentsViewModel();
+            foreach (var p in _personRepository.GetAll())
+            {
+                personWithParents = GetPersonParents(p.Id);
+                if(personWithParents != null)
+                {
+                    personsWithParents.Add(personWithParents);
+                }
+            }
+            /// надо заполнить level
+            int level = 0;
+            var personsWithOutParents = personsWithParents.Where(p => p.Person_Father is null && p.Person_Mother is null);
+            foreach(var p in personsWithOutParents)
+            {
+
+            }
+
+            return personsWithParents;
+        }
         public void SetRelation(RelationshipViewModel model)
         {
             var relationship = _relationshipRepository.GetAll().Where(p => p.Person.Id == model.PersonId)

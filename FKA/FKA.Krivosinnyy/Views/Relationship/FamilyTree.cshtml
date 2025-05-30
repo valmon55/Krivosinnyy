@@ -4,23 +4,44 @@
     ViewData["Title"] = "Family Tree";
 }
 <h3> Family Tree</h3>
-@foreach(var relation in Model.Relationships)
-{
-    <div>
-        <span> У </span>
-    </div>
-    <div>
-        <img src="@Url.Content(relation.Person.Avatar.Path)" height="100px" width="100px" />
-        <span> @relation.Person.LastName @relation.Person.FirstName @relation.Person.MiddleName</span>
-    </div>
-    <div>
-        <span> есть </span>
-    </div>
-    <div>
-        <span> @relation.Relation </span>
-    </div>
-    <div>
-        <img src="@Url.Content(relation.RelatedPerson.Avatar.Path)" height="100px" width="100px" />
-        <span> @relation.RelatedPerson.LastName @relation.RelatedPerson.FirstName @relation.RelatedPerson.MiddleName</span>
-    </div>
-}
+<div>
+    @foreach(var relation in Model.Relationships)
+    {
+        <div name="Relation" id=@relation.Id>
+            <span> У </span>
+            <img class="Person1" id=@relation.Person.Id  
+                src="@Url.Content(relation.Person.Avatar.Path)" height="100px" width="100px" />
+            <span> @relation.Person.LastName @relation.Person.FirstName @relation.Person.MiddleName</span>
+            <span> есть </span>
+            <span> @relation.Relation </span>
+            <img class="Person2" id=@relation.RelatedPerson.Id 
+                src="@Url.Content(relation.RelatedPerson.Avatar.Path)" height="100px" width="100px" />
+            <span> @relation.RelatedPerson.LastName @relation.RelatedPerson.FirstName @relation.RelatedPerson.MiddleName</span>
+        </div>
+    }
+</div>
+<canvas id="canvas"></canvas>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function (event) {
+        var canvas = document.getElementById('canvas');
+        context = canvas.getContext('2d');
+        var relations = document.getElementsByName("Relation");
+        relations.forEach((val, index, arr) => getElements(val));
+
+        drawLine(50, 10, 1200, 90);
+    });
+    function getElements(val) {
+        var p1 = val.querySelector(".Person1");
+        var p2 = val.querySelector(".Person2");
+        
+        drawLine(p1.x, p1.y, p2.x, p2.y);
+    }
+    function drawLine(x1, y1, x2, y2) { 
+        context.beginPath();
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
+        context.strokeStyle = '#7142f4';
+        context.stroke();
+    }
+</script>

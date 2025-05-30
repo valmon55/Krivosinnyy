@@ -70,6 +70,7 @@ namespace FKA.Krivosinnyy.Controllers
         [HttpGet]
         public IActionResult GetRelationships()
         {
+            /// только спимсок всех связей
             return View("FamilyTree",_relationshipService.AllRelationships());
         }
     }

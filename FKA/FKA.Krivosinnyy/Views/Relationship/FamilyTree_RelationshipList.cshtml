@@ -1,0 +1,26 @@
+﻿@model FKA.Krivosinnyy.BLL.ViewModels.Relationship.AllRelationshipsViewModel
+
+@{
+    ViewData["Title"] = "Family Tree";
+}
+<h3> Family Tree</h3>
+@foreach(var relation in Model.Relationships)
+{
+    <div>
+        <span> У </span>
+    </div>
+    <div>
+        <img src="@Url.Content(relation.Person.Avatar.Path)" height="100px" width="100px" />
+        <span> @relation.Person.LastName @relation.Person.FirstName @relation.Person.MiddleName</span>
+    </div>
+    <div>
+        <span> есть </span>
+    </div>
+    <div>
+        <span> @relation.Relation </span>
+    </div>
+    <div>
+        <img src="@Url.Content(relation.RelatedPerson.Avatar.Path)" height="100px" width="100px" />
+        <span> @relation.RelatedPerson.LastName @relation.RelatedPerson.FirstName @relation.RelatedPerson.MiddleName</span>
+    </div>
+}
