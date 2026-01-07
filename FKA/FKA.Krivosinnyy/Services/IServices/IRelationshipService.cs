@@ -14,5 +14,6 @@ namespace FKA.Krivosinnyy.Services.IServices
         public EditPersonRelationsViewModel EditPersonRelations(int personId);
         public void EditPersonRelations(EditPersonRelationsViewModel model, List<int> SelectedPersons);
         public void AddPersonRelation(int personId, Person person);
+        public void RemovePersonRelation(int personId, Person person);
     }
 }

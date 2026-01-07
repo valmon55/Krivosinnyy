@@ -104,13 +104,24 @@ namespace FKA.Krivosinnyy.Services
                 var personsToAdd = selectedPersons.Where(s => !relatedPersons.Any(r => r.Id == s.Id)).ToList();
                 foreach(var person in personsToAdd)
                 {
-                    _relationshipRepository.Add(model.PersonId, person);
+                    try
+                    {
+                        _relationshipRepository.Add(model.PersonId, person);
+                    }
+                    catch(Exception ex) 
+                    { 
+                        //ошибка при вставке т.к. работает trigger и откатывает вставку
+                    };
                 }
             }
         }
         public void AddPersonRelation(int personId, Person person)
         {
             _relationshipRepository.Add(personId, person);
+        }
+        public void RemovePersonRelation(int personId, Person person)
+        {
+            _relationshipRepository.Remove(personId, person);
         }
 
         public List<PersonRelationsViewModel> AllPersonRelations(int personId)

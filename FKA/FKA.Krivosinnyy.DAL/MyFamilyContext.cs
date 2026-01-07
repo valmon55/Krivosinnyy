@@ -30,6 +30,8 @@ namespace FKA.Krivosinnyy.DAL
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration<Relationship>(new RelationshipConfiguration());
+            //Сообщаем EF, что на таблице есть триггер
+            builder.Entity<Relationship>().ToTable(tb => tb.UseSqlOutputClause(false));
         }
     }
 }
