@@ -56,7 +56,14 @@ namespace FKA.Krivosinnyy.Controllers
         public IActionResult EditPersonRelation(int personId, int relatedPersonId)
         {
             var relation = _relationshipService.GetRelation(personId,relatedPersonId);
-            return View("EditPersonRelation", relation);
+            if (relation != null)
+            {
+                return View("EditPersonRelation", relation);
+            }
+            else 
+            { 
+                return RedirectToAction("ViewPerson", "Person", new { personId = personId });
+            }
         }
         [Route("EditPersonRelation")]
         [HttpPost]

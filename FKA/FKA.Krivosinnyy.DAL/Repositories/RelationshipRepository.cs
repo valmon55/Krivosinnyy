@@ -65,11 +65,20 @@ namespace FKA.Krivosinnyy.DAL.Repositories
                                 .Where(x => x.PersonId == personId)
                                 .Include(c => c.RelatedPerson)
                                 .ToList();
+            var rels_rev = Relationships
+                                .Where(x => x.RelatedPersonId == personId)
+                                .Include(c => c.Person)
+                                .ToList();
             var pers = new List<PersonWithRelTypeExt>();
             var p = new PersonWithRelTypeExt();
             foreach (var r in rels)
             {
                 p = p.SetRelType(r.RelatedPerson, r.Relation);
+                pers.Add(p);
+            }
+            foreach (var r in rels_rev)
+            {
+                p = p.SetRelType(r.Person, r.Relation, true);
                 pers.Add(p);
             }
 

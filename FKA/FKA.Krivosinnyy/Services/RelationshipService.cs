@@ -141,20 +141,30 @@ namespace FKA.Krivosinnyy.Services
 
             return allRelsViewModel;
         }
-        public RelationshipViewModel GetRelation(int personId, int relatedPersonId)
+        public RelationshipViewModel? GetRelation(int personId, int relatedPersonId)
         {
-            var rel = _relationshipRepository.GetAll().Where(p => p.Person.Id == personId)
-                                                      .Where(r => r.RelatedPerson.Id == relatedPersonId).ElementAt(0);
-            var relViewModel = new RelationshipViewModel()
+            var rel = _relationshipRepository.GetAll()
+                    .Where(p => p.Person.Id == personId  && p.RelatedPerson.Id == relatedPersonId
+                        || p.Person.Id == relatedPersonId && p.RelatedPerson.Id == personId
+                    )
+                    .SingleOrDefault();
+            if (rel is not null)
             {
-                Id = rel.Id,
-                PersonId = rel.PersonId,
-                Person = rel.Person,
-                RelatedPersonId = rel.RelatedPersonId,
-                RelatedPerson = rel.RelatedPerson,
-                Relation = rel.Relation
-            };
-            return relViewModel;
+                var relViewModel = new RelationshipViewModel()
+                {
+                    Id = rel.Id,
+                    PersonId = rel.PersonId,
+                    Person = rel.Person,
+                    RelatedPersonId = rel.RelatedPersonId,
+                    RelatedPerson = rel.RelatedPerson,
+                    Relation = rel.Relation
+                };
+                return relViewModel;
+            }
+            else
+            {
+                return null;
+            }
         }
         public PersonWithParentsViewModel GetPersonParents(int personId)
         {
