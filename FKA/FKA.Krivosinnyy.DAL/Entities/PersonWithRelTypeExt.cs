@@ -20,8 +20,10 @@ namespace FKA.Krivosinnyy.DAL.Entities
                     case Relation.Husband: rel = Relation.Wife;  break;
                     case Relation.Groom: rel = Relation.Bride;  break;
                     case Relation.Bride: rel = Relation.Groom; break;
-                    case Relation.Father: rel = person.gender == Gender.Man ? Relation.Son : Relation.Daughter; break;
-                    case Relation.Mother: rel = person.gender == Gender.Man ? Relation.Son : Relation.Daughter; break;
+                    case Relation.Father: rel = person.Gender == Gender.Man ? Relation.Son : Relation.Daughter; break;
+                    case Relation.Mother: rel = person.Gender == Gender.Man ? Relation.Son : Relation.Daughter; break;
+                    case Relation.Daughter: rel = person.Gender == Gender.Man ? Relation.Father : Relation.Mother; break;
+                    case Relation.Son: rel = person.Gender == Gender.Man ? Relation.Father : Relation.Mother; break;
                     default: rel = relation; break;
                 };
             }
@@ -34,7 +36,7 @@ namespace FKA.Krivosinnyy.DAL.Entities
                 MiddleName = person.MiddleName,
                 LastName = person.LastName,
                 BirthDate = person.BirthDate,
-                gender = person.gender,
+                Gender = person.Gender,
                 RelationType = rel,
             };
         }

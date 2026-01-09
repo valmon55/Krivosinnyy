@@ -38,6 +38,12 @@
             @* <label asp-for="Photo"></label><br /> *@
             <input asp-for="Photo" hidden />
         </div>
+        <div>
+            <span>
+                <select asp-for=@Model.Gender asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.DAL.Entities.Gender>()"></select>
+                <input asp-for=Gender value=@Model.Gender hidden />
+            </span>
+        </div>
         <div>День рождения</div>
         <div>
             <select asp-for="Day" id="day">

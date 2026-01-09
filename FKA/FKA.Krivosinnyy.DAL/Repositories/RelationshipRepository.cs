@@ -142,7 +142,7 @@ namespace FKA.Krivosinnyy.DAL.Repositories
                     MiddleName = item.MiddleName,
                     LastName = item.LastName,
                     BirthDate = item.BirthDate,
-                    gender = item.gender,
+                    Gender = item.Gender,
                 },
                 Relation = item.RelationType
             };

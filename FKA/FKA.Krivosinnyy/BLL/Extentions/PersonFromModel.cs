@@ -13,7 +13,7 @@ namespace FKA.Krivosinnyy.BLL.Extentions
             person.MiddleName = personViewModel.MiddleName;
             person.LastName = personViewModel.LastName;
             person.BirthDate = new DateTime((int)personViewModel.Year, (int)personViewModel.Month, (int)personViewModel.Day);
-            person.gender = personViewModel.gender;
+            person.Gender = personViewModel.Gender;
             //person.Avatar = new DAL.Entities.File() { Path = personViewModel.Photo };
 
             return person;

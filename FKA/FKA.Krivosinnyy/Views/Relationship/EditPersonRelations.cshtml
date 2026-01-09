@@ -20,7 +20,7 @@
     <input asp-for=Person.MiddleName value=@Model.Person.MiddleName hidden />
     <input asp-for=Person.LastName value=@Model.Person.LastName hidden />
     <input asp-for=Person.BirthDate value=@Model.Person.BirthDate hidden />
-    <input asp-for=Person.gender value=@Model.Person.gender hidden />
+    <input asp-for=Person.Gender value=@Model.Person.Gender hidden />
     <input asp-for=Person.Avatar.Path value=@Model.Person.Avatar.Path hidden />
     
     @{
@@ -55,7 +55,7 @@
                 <input asp-for=@personWithRelTypeExt.MiddleName value=@person.MiddleName type=hidden />
                 <input asp-for=@personWithRelTypeExt.LastName value=@person.LastName type=hidden />
                 <input asp-for=@personWithRelTypeExt.BirthDate value=@person.BirthDate type=hidden />
-                <input asp-for=@personWithRelTypeExt.gender value=@person.gender type=hidden />
+                <input asp-for=@personWithRelTypeExt.Gender value=@person.Gender type=hidden />
                 <input asp-for=@personWithRelTypeExt.Avatar.Path value=@{ person.Avatar.Path ??= string.Empty;} type=hidden />
                 <span>
                     <select asp-for=@personWithRelTypeExt.RelationType asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.DAL.Entities.Relation>()"></select>
