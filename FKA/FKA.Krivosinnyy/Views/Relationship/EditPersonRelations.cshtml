@@ -30,7 +30,7 @@
 
     @foreach (var person in Model.RelatedPersons)
     {
-        <div>
+        <div class="person-block">
             @foreach(var checkPersonId in Model.CheckedRelatedPersonIds)
             {
                 if (checkPersonId.Key == @person.Id)
@@ -69,5 +69,5 @@
         <input asp-for=RelatedPersons value=@relatedPerson hidden />
     @* <input asp-for=@Model name="p" value=@Model hidden /> *@
     @* <input asp-for=CheckedRelatedPersonIds name=RelatedPersonsDic value=@Model.CheckedRelatedPersonIds hidden /> *@
-    <input type="submit" value=" Изменить "/>
+    <input class="btn-edit" type="submit" value=" Изменить " />
 </form>

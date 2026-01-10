@@ -4,3 +4,46 @@
 .navbar-right li {
     display: inline-block;
 }
+.main-background {
+    background-color: #dee2e6
+}
+.navbar-background {
+    background-color: #c0c4c8 !important
+}
+.btn-save {
+    background-color: dodgerblue;
+    color: azure;
+    border-radius: 5px;
+    border: none;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin: 10px,5px;
+    padding: 20px,10px;
+}
+.btn-edit {
+    background-color: lightseagreen;
+    color: azure;
+    border-radius: 5px;
+    border: none;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin: 10px,5px;
+    padding: 20px,10px;
+}
+.btn-delete {
+    background-color: red;
+    color: azure;
+    border-radius: 5px;
+    border: none;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin: 10px,5px;
+    padding: 20px,10px;
+}
+.person-block {
+    margin: 10px,5px;
+    padding: 20px,10px;
+}

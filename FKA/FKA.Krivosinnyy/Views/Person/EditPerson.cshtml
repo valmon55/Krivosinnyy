@@ -13,8 +13,8 @@
         <img src = "@Url.Content(Model.Photo)" height="100px" width="100px" />
     </div>
     <form method="post" asp-action="SetAvatar" asp-controller="Person" asp-route-personId=@Model.Id enctype="multipart/form-data">
-        <input type="file" name="uploadedFile" />
-        <input type="submit" value="Загрузить фото" />
+        <input class="btn-save" type="file" name="uploadedFile" hidden/>
+        <input class="btn-save" type="submit" value=" Загрузить фото " />
     </form>
     <form method="post" asp-action="EditPerson" asp-controller="Person">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -64,11 +64,11 @@
             <span asp-validation-for="Year" class="text-danger"></span>
         </div>
         <div>
-            <input type="submit" value="Сохранить" />
+            <input class="btn-save" type="submit" value=" Сохранить " />
         </div>
     </form>
 
-    <a method="get" asp-action="EditPersonRelations" asp-controller="Relationship" asp-route-personId=@Model.Id>Добавить в профиль близкого</a>
+    <a class="btn-save" method="get" asp-action="EditPersonRelations" asp-controller="Relationship" asp-route-personId=@Model.Id> Добавить в профиль близкого </a>
 </div>
 
 

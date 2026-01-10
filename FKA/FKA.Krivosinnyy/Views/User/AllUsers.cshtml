@@ -7,18 +7,18 @@
 
 @foreach(var user in Model)
 {
-    <div>
+    <div class="person-block">
         <div> @user.Foto</div>
         <span> @user.Login</span>
         <span> @user.Last_Name @user.First_Name @user.Middle_Name</span>
         <span> @user.Day @((FKA.Krivosinnyy.BLL.ViewModels.Months)user.Month) @user.Year</span>
         <span> @user.Email</span>
-        <a method="get" asp-action="Edit" asp-controller="User" asp-route-userId=@user.Id>Редактировать</a>
+        <a class="btn-edit" method="get" asp-action="Edit" asp-controller="User" asp-route-userId=@user.Id> Редактировать </a>
         <div>
-            <a method="get" asp-action="ConfirmAccount" asp-controller="User" asp-route-userId=@user.Id>Активировать аккаунт</a>
+            <a class="btn-save" method="get" asp-action="ConfirmAccount" asp-controller="User" asp-route-userId=@user.Id> Активировать аккаунт </a>
         </div>
         <div>
-            <a method="get" asp-action="ForgotPassword" asp-controller="User" asp-route-userId=@user.Id>Сбросить пароль</a>
+            <a class="btn-save" method="get" asp-action="ForgotPassword" asp-controller="User" asp-route-userId=@user.Id> Сбросить пароль </a>
         </div>
     </div>
 }
