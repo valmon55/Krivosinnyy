@@ -7,55 +7,55 @@
 <form method="post" asp-action="Edit" asp-controller="User">
     <div asp-validation-summary="ModelOnly"  class="text-danger"></div>
     <input asp-for="Id" value=@Model.Id hidden />
-    <div class="form-group">
-        <label asp-for="First_Name"></label><br />
+    <div class="my-1 form-group">
+        <label class="fw-bold" asp-for="First_Name"></label><br />
         <input asp-for="First_Name" class="form-control" />
         <span asp-validation-for="First_Name" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Middle_Name"></label><br />
+    <div class="my-1 form-group">
+        <label class="fw-bold" asp-for="Middle_Name"></label><br />
         <input asp-for="Middle_Name" class="form-control" />
         <span asp-validation-for="Middle_Name" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Last_Name"></label><br />
+    <div class="my-1 form-group">
+        <label class="fw-bold" asp-for="Last_Name"></label><br />
         <input asp-for="Last_Name" class="form-control" />
         <span asp-validation-for="Last_Name" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Email"></label><br />
+    <div class="my-1 form-group">
+        <label class="fw-bold" asp-for="Email"></label><br />
         <input asp-for="Email" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
-    <div>День рождения</div>
-    <div class="form-group">
-        <select asp-for="Day" id="day">
+    <div class="my1 fw-bold">День рождения</div>
+    <div class="my1 form-group">
+        <select class="mx-1" asp-for="Day" id="day">
             <option value="">@Model.Day</option>
         </select>
         <span asp-validation-for="Day" class="text-danger"></span>
 
-        <select asp-for="Month" asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.BLL.ViewModels.Months>()"
+        <select class="mx-1" asp-for="Month" asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.BLL.ViewModels.Months>()"
                 onchange="CorrectDay()" id="month">
             <option value="">@Model.Month</option>
         </select>
         <span asp-validation-for="Month" class="text-danger"></span>
 
-        <select asp-for="Year" id="year" onchange="CorrectDay()" 
-            asp-items="Enumerable.Range(DateTime.Now.AddYears(-100).Year, DateTime.Now.AddYears(-12).Year - DateTime.Now.AddYears(-100).Year).Reverse().Select(x=> new SelectListItem(x.ToString(), x.ToString()))">
+        <select class="mx-1" asp-for="Year" id="year" onchange="CorrectDay()"
+                asp-items="Enumerable.Range(DateTime.Now.AddYears(-100).Year, DateTime.Now.AddYears(-12).Year - DateTime.Now.AddYears(-100).Year).Reverse().Select(x=> new SelectListItem(x.ToString(), x.ToString()))">
             <option value="">@Model.Year</option>
         </select>
         <span asp-validation-for="Year" class="text-danger"></span>
     </div>
-    <div class ="form-group">
-        <a class="btn-edit" method="get" asp-controller="User" asp-action="ChangePassword" asp-route-Id=@Model.Id> Изменить пароль </a>
+    <div class ="my1 form-group">
+        <a class="btn btn-edit" method="get" asp-controller="User" asp-action="ChangePassword" asp-route-Id=@Model.Id> Изменить пароль </a>
     </div>
-    <div class="form-group">
-        <label asp-for="Login"></label><br />
+    <div class="my1 form-group">
+        <label class="fw-bold" asp-for="Login"></label><br />
         <input asp-for="Login" class="form-control" />
         <span asp-validation-for="Login" class="text-danger"></span>
     </div>
-    <div>
-        <input class="btn-save" type="submit" value=" Сохранить " class="btn btn-primary" />
+    <div class="my1">
+        <input class="btn btn-save" type="submit" value=" Сохранить "/>
     </div>
 </form>
 

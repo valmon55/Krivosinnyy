@@ -64,11 +64,11 @@
             <span asp-validation-for="Year" class="text-danger"></span>
         </div>
         <div>
-            <input class="btn-save" type="submit" value=" Сохранить " />
+            <input class=" btn btn-save" type="submit" value=" Сохранить " />
         </div>
     </form>
 
-    <a class="btn-save" method="get" asp-action="EditPersonRelations" asp-controller="Relationship" asp-route-personId=@Model.Id> Добавить в профиль близкого </a>
+    <a class="btn btn-save" method="get" asp-action="EditPersonRelations" asp-controller="Relationship" asp-route-personId=@Model.Id> Добавить в профиль близкого </a>
 </div>
 
 
