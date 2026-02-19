@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "EditUser";
 }
-<h3>Редактирование пользователя</h3>
+<h3 class="fw-bold card-title">Редактирование пользователя</h3>
 <form method="post" asp-action="Edit" asp-controller="User">
     <div asp-validation-summary="ModelOnly"  class="text-danger"></div>
     <input asp-for="Id" value=@Model.Id hidden />
@@ -46,16 +46,16 @@
         </select>
         <span asp-validation-for="Year" class="text-danger"></span>
     </div>
-    <div class ="my1 form-group">
-        <a class="btn btn-edit" method="get" asp-controller="User" asp-action="ChangePassword" asp-route-Id=@Model.Id> Изменить пароль </a>
-    </div>
-    <div class="my1 form-group">
+    <div class="my-1 form-group">
         <label class="fw-bold" asp-for="Login"></label><br />
         <input asp-for="Login" class="form-control" />
         <span asp-validation-for="Login" class="text-danger"></span>
     </div>
-    <div class="my1">
+    <div class="my-1">
         <input class="btn btn-save" type="submit" value=" Сохранить "/>
+    </div>
+    <div class="my-1 form-group">
+        <a class="btn btn-edit" method="get" asp-controller="User" asp-action="ChangePassword" asp-route-Id=@Model.Id> Изменить пароль </a>
     </div>
 </form>
 

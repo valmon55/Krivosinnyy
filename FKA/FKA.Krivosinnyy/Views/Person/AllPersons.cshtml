@@ -3,23 +3,24 @@
 @{
     ViewData["Title"] = "AllPersons";
 }
-<h3>List of persons</h3>
-<div>
-    <span>Add Person</span>
-    <a class="btn-save" method="get" asp-action="AddPerson" asp-controller="Person">Добавить человека</a>
+<h3 class="fw-bold card-title">Список людей</h3>
+<div class="my-4">
+    <a class="btn btn-save" method="get" asp-action="AddPerson" asp-controller="Person">Добавить человека</a>
 </div>
 @foreach(var person in Model)
 {
-    <div class="person-block">
+    <div class="person-block my-4 container">
         @* <div> @person.Photo</div> *@
-        <div>
+        <div class="my-1">
             <img src="@Url.Content(person.Photo)" height="100px" width="100px" />
         </div>
-        <span> @person.LastName @person.FirstName @person.MiddleName</span>
-        <span> @person.Day @((FKA.Krivosinnyy.BLL.ViewModels.Months)person.Month) @person.Year</span>
-        <a class="btn-save" method="get" asp-action="ViewPerson" asp-controller="Person" asp-route-personId=@person.Id>Открыть профиль</a>
-        <form method="post" asp-action="RemovePerson" asp-controller="Person" asp-route-personId=@person.Id>
-            <input class="btn-delete" type="submit" value="Удалить человека" />
+        <span class="fw-bold"> @person.LastName @person.FirstName @person.MiddleName</span>
+        <span class ="fw-bold"> @person.Day @((FKA.Krivosinnyy.BLL.ViewModels.Months)person.Month) @person.Year</span>
+        <div class="my-1">
+            <a class="btn btn-save" method="get" asp-action="ViewPerson" asp-controller="Person" asp-route-personId=@person.Id>Открыть профиль</a>
+        </div>
+        <form class="my-1" method="post" asp-action="RemovePerson" asp-controller="Person" asp-route-personId=@person.Id>
+            <input class="btn btn-delete" type="submit" value="Удалить человека" />
         </form>
     </div>    
 }

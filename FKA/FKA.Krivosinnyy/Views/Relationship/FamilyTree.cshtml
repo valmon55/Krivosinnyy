@@ -3,20 +3,20 @@
 @{
     ViewData["Title"] = "Family Tree";
 }
-<h3> Family Tree</h3>
-<div>
+<h3 class="fw-bold card-title">Генеалогическое дерево</h3>
+<div class="person-block my-4 container">
     @foreach(var relation in Model.Relationships)
     {
         <div name="Relation" id=@relation.Id>
-            <span> У </span>
-            <img class="Person1" id=@relation.Person.Id  
+            <span class="mx-4 fw-bold"> У </span>
+            <img class="mx-4 Person1" id=@relation.Person.Id  
                 src="@Url.Content(relation.Person.Avatar.Path)" height="100px" width="100px" />
-            <span> @relation.Person.LastName @relation.Person.FirstName @relation.Person.MiddleName</span>
-            <span> есть </span>
-            <span> @relation.Relation </span>
-            <img class="Person2" id=@relation.RelatedPerson.Id 
+            <span class="mx-4 fw-bold"> @relation.Person.LastName @relation.Person.FirstName @relation.Person.MiddleName</span>
+            <span class="mx-4 fw-bold"> есть </span>
+            <span class="mx-4 fw-bold"> @relation.Relation </span>
+            <img class="mx-4 Person2" id=@relation.RelatedPerson.Id 
                 src="@Url.Content(relation.RelatedPerson.Avatar.Path)" height="100px" width="100px" />
-            <span> @relation.RelatedPerson.LastName @relation.RelatedPerson.FirstName @relation.RelatedPerson.MiddleName</span>
+            <span class="mx-4 fw-bold"> @relation.RelatedPerson.LastName @relation.RelatedPerson.FirstName @relation.RelatedPerson.MiddleName</span>
         </div>
     }
 </div>
@@ -29,7 +29,7 @@
         var relations = document.getElementsByName("Relation");
         relations.forEach((val, index, arr) => getElements(val));
 
-        drawLine(50, 10, 1200, 90);
+        //drawLine(50, 10, 1200, 90);
     });
     function getElements(val) {
         var p1 = val.querySelector(".Person1");

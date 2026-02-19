@@ -3,20 +3,20 @@
 @{
     ViewData["Title"] = "ChangePassword";
 }
-<h3>ChangePassword</h3>
+<h3 class="fw-bold card-title">Активировать аккаунт</h3>
 <form method="post" asp-action="ConfirmAccount" asp-controller="User">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="mrgn">
+    <div class="my-1 mrgn">
         <label asp-for="Email"></label><br />
         <input asp-for="Email" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
-    <div class="mrgn">
+    <div class="my-1 mrgn">
         <label asp-for="Code"></label><br />
         <input asp-for="Code" />
         <span asp-validation-for="Code" class="text-danger"></span>
     </div>
-    <div>
-        <input class="btn-save" type="submit" value=" Подтвердить аккаунт " />
+    <div class="my-1">
+        <input class="btn btn-save" type="submit" value=" Подтвердить аккаунт " />
     </div>
 </form>

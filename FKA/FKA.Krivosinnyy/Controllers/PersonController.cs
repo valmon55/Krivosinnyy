@@ -44,6 +44,10 @@ namespace FKA.Krivosinnyy.Controllers
             {
                 _personService.AddPerson(model);
             }
+            else
+            {
+                return View(model);
+            }
             return RedirectToAction("AllPersons", "Person");
         }
         //[Authorize(Roles = "Admin")]

@@ -4,26 +4,26 @@
     ViewData["Title"] = "Login";
 }
 
-<h3> LOGIN </h3>
+<h3 class="fw-bold card-title">Войти</h3>
 <form method="post" asp-action="Login" asp-controller="User">
     <div asp-validation-summary = "ModelOnly" class="text-danger"></div>
-    <div>
+    <div class="my-1">
         <label asp-for="Email"></label><br />
         <input asp-for="Email"/>
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
-    <div>
+    <div class="my-1">
         <label asp-for="Password"></label><br />
         <input asp-for="Password" />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
-    <div>
-        <input class="btn-save" type="submit" value=" Войти " />
+    <div class="my-1">
+        <input class="btn btn-save" type="submit" value=" Войти " />
     </div>
 </form>
-<div>
+<div class="my-1">
     <span>Ещё нет аккаунта?</span>
-    <a class="btn-save" method="get" asp-action="Register" asp-controller="User"> Зарегистрируйтесь </a>
+    <a class="btn btn-edit" method="get" asp-action="Register" asp-controller="User"> Зарегистрируйтесь </a>
 </div>
 
 @section Scripts {

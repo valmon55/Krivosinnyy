@@ -12,12 +12,16 @@ namespace FKA.Krivosinnyy.BLL.ViewModels.Person
         public string LastName { get; set; } = string.Empty;
         public string MiddleName { get; set; } = string.Empty;
         public string Photo { get; set; } = string.Empty;
+        [Required]
         public Gender Gender { get; set; }
         [Display(Name = "Год")]
+        [Required]
         public int? Year { get; set; }
         [Display(Name = "Месяц")]
+        [Required]
         public int? Month { get; set; }
         [Display(Name = "День")]
+        [Required]
         public int? Day { get; set; }
 
     }

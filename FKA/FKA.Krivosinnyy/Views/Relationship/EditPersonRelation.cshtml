@@ -3,26 +3,29 @@
 @{
     ViewData["Title"] = "Edit PersonRelation";
 }
-<h3> Person Relationship</h3>
-<form method="post" asp-action="EditPersonRelation" asp-controller="Relationship">
-    <div asp-validation-summary=ModelOnly class="text-danger"></div>
-    <div>
+<h3 class="fw-bold card-title">Родство</h3>
+<form class="my-4 container" method="post" asp-action="EditPersonRelation" asp-controller="Relationship">
+    <div class="my-1" asp-validation-summary=ModelOnly class="text-danger"></div>
+    <div class="my-1">
         <img src="@Url.Content(Model.Person.Avatar.Path)" height="100px" width="100px" />
         <input asp-for=PersonId value=@Model.Person.Id hidden />
         <input asp-for=Person value=@Model.Person hidden />
-        <span> @Model.Person.LastName @Model.Person.FirstName @Model.Person.MiddleName</span>
+        <span class="fw-bold"> @Model.Person.LastName @Model.Person.FirstName @Model.Person.MiddleName</span>
     </div>
-    <div>
+    <div class="my-1">
         <img src="@Url.Content(Model.RelatedPerson.Avatar.Path)" height="100px" width="100px" />
         <input asp-for=RelatedPersonId value=@Model.RelatedPerson.Id hidden />
         <input asp-for=RelatedPerson value=@Model.RelatedPerson hidden />
-        <span> @Model.Person.LastName @Model.Person.FirstName @Model.Person.MiddleName</span>
+        <span class="fw-bold"> @Model.RelatedPerson.LastName @Model.RelatedPerson.FirstName @Model.RelatedPerson.MiddleName</span>
     </div>
-    <div>
+    <div class="my-1">
+        <span class="fw-bold">Родство</span>
+    </div>
+    <div class="my-1">
         <span>
             <select asp-for=@Model.Relation asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.DAL.Entities.Relation>()"></select>
             <input asp-for=Relation value=@Model.Relation hidden />
         </span>
     </div>    
-    <input class="btn-save" type="submit" value=" Изменить "/>
+    <input class="btn btn-save" type="submit" value=" Изменить " />
 </form>

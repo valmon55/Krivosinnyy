@@ -3,32 +3,32 @@
 @{
     ViewData["Title"] = "Register";
 }
-<h3>Register</h3>
+<h3 class="fw-bold card-title">Регистрация</h3>
 <form method="post" asp-action="Register" asp-controller="User">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div>
+    <div class="my-1">
         <label asp-for="First_Name"></label><br />
         <input asp-for="First_Name" />
         <span asp-validation-for="First_Name" class="text-danger"></span>
     </div>
-    <div>
+    <div class="my-1">
         <label asp-for="Middle_Name"></label><br />
         <input asp-for="Middle_Name" />
         <span asp-validation-for="Middle_Name" class="text-danger"></span>
     </div>
-    <div>
+    <div class="my-1">
         <label asp-for="Last_Name"></label><br />
         <input asp-for="Last_Name" />
 
         <span asp-validation-for="Last_Name" class="text-danger"></span>
     </div>
-    <div>
+    <div class="my-1">
         <label asp-for="Email"></label><br />
         <input asp-for="Email" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
-    <div>День рождения</div>
-    <div>
+    <div class="my-1">День рождения</div>
+    <div class="my-1">
         <select asp-for="Day" id="ddlDay">
             <option value="">@Model.Day</option>
         </select>
@@ -46,22 +46,22 @@
         </select>
         <span asp-validation-for="Year" class="text-danger"></span>
     </div>
-    <div class="mrgn">
+    <div class="my-1 mrgn">
         <label asp-for="PasswordReg"></label><br />
         <input asp-for="PasswordReg" />
         <span asp-validation-for="PasswordReg" class="text-danger"></span>
     </div>
-    <div class="mrgn">
+    <div class="my-1 mrgn">
         <label asp-for="PasswordConfirm"></label><br />
         <input asp-for="PasswordConfirm" />
         <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
     </div>
-    <div class="mrgn">
+    <div class="my-1 mrgn">
         <label asp-for="Login"></label><br />
         <input asp-for="Login" />
         <span asp-validation-for="Login" class="text-danger"></span>
     </div>
-    <div>
+    <div class="my-1">
         <input class="btn btn-save" type="submit" value=" Зарегистрироваться " />
     </div>
 </form>

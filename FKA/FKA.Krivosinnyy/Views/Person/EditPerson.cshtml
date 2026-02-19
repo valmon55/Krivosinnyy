@@ -3,49 +3,49 @@
 @{
     ViewData["Title"] = "Person";
 }
-<h3>Person Page</h3>
+<h3 class="fw-bold card-title">Страница человека</h3>
 
-<div>
+<div class="person-block my-4 container">
     @* Клиент не помет получить доступ к файлам напрямую на сервере *@
     @* Необходимо создавать ссылку на ресурс изображения, который *@
     @* браузер запрашивает после получения html страницы *@
-    <div>
+    <div class="my-1">
         <img src = "@Url.Content(Model.Photo)" height="100px" width="100px" />
     </div>
-    <form method="post" asp-action="SetAvatar" asp-controller="Person" asp-route-personId=@Model.Id enctype="multipart/form-data">
-        <input class="btn-save" type="file" name="uploadedFile" hidden/>
-        <input class="btn-save" type="submit" value=" Загрузить фото " />
+    <form class="my-1" method="post" asp-action="SetAvatar" asp-controller="Person" asp-route-personId=@Model.Id enctype="multipart/form-data">
+        <input class="btn btn-save" type="file" name="uploadedFile" hidden/>
+        <input class="btn btn-save" type="submit" value=" Загрузить фото " />
     </form>
-    <form method="post" asp-action="EditPerson" asp-controller="Person">
+    <form class="my-1" method="post" asp-action="EditPerson" asp-controller="Person">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input asp-for="Id" value=@Model.Id hidden />
-        <div>
+        <div class="my-1">
             <label asp-for="FirstName"></label><br />
             <input asp-for="FirstName" />
             <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
-        <div>
+        <div class="my-1">
             <label asp-for="MiddleName"></label><br />
             <input asp-for="MiddleName" />
             <span asp-validation-for="MiddleName" class="text-danger"></span>
         </div>
-        <div>
+        <div class="my-1">
             <label asp-for="LastName"></label><br />
             <input asp-for="LastName" />
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
-        <div>
+        <div class="my-1">
             @* <label asp-for="Photo"></label><br /> *@
             <input asp-for="Photo" hidden />
         </div>
-        <div>
+        <div class="my-1">
             <span>
                 <select asp-for=@Model.Gender asp-items="Html.GetEnumSelectList<FKA.Krivosinnyy.DAL.Entities.Gender>()"></select>
                 <input asp-for=Gender value=@Model.Gender hidden />
             </span>
         </div>
-        <div>День рождения</div>
-        <div>
+        <div class="my-1">День рождения</div>
+        <div class="my-1">
             <select asp-for="Day" id="day">
                 <option value="">@Model.Day</option>
             </select>
@@ -63,12 +63,13 @@
             </select>
             <span asp-validation-for="Year" class="text-danger"></span>
         </div>
-        <div>
+        <div class="my-1">
             <input class=" btn btn-save" type="submit" value=" Сохранить " />
         </div>
     </form>
-
-    <a class="btn btn-save" method="get" asp-action="EditPersonRelations" asp-controller="Relationship" asp-route-personId=@Model.Id> Добавить в профиль близкого </a>
+    <div class="my-1">
+        <a class="btn btn-edit" method="get" asp-action="EditPersonRelations" asp-controller="Relationship" asp-route-personId=@Model.Id> Добавить в профиль близкого </a>
+    </div>
 </div>
 
 
